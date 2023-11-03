@@ -10,23 +10,18 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('city_health_workers', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
-            $table->string('contact_number', 15);
-            $table->string('password');
-            $table->rememberToken();
+            $table->foreignId('user_id');
+            $table->boolean('admin');
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('city_health_workers');
     }
 };

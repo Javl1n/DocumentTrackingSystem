@@ -18,11 +18,14 @@ switch ($width) {
     case '48':
         $width = 'w-48';
         break;
+    case 'full':
+        $width = 'w-full';
+        break;
 }
 @endphp
 
-<div class="relative" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
-    <div @click="open = ! open">
+<div class="relative w-full" x-data="{ open: false }" @click.outside="open = false" @close.stop="open = false">
+    <div class="w-full" @click="open = ! open">
         {{ $trigger }}
     </div>
 
