@@ -28,6 +28,13 @@ Route::get('bhw/documents', [DocumentController::class, 'index'])
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
+
+Route::middleware(['role:CHO', 'auth'])->group(function () {
+    Route::get('templates', [DocumentTemplateController::class, 'index'])->name('templates');
+    Route::get('templates/create', [DocumentTemplateController::class, 'create']);
+});
+
+
 Route::middleware('auth')->group(function () {
     Route::get('/', [DocumentController::class, 'index'])->name('Home');
     // Route::get('documents', [DocumentController::class, 'index'])
@@ -36,11 +43,12 @@ Route::middleware('auth')->group(function () {
     // Route::middleware('role:BHW')->group(function () {
 
     // });
-
-    Route::middleware('role:CHO')->group(function () {
+    Route::middleware(['role:CHO'])->group(function () {
         Route::get('templates', [DocumentTemplateController::class, 'index'])->name('templates');
+        Route::post('templates', [DocumentTemplateController::class, 'store']);
         Route::get('templates/create', [DocumentTemplateController::class, 'create']);
     });
+
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

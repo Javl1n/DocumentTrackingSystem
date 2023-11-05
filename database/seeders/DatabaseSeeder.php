@@ -16,14 +16,16 @@ class DatabaseSeeder extends Seeder
             'name' => 'Apopong'
         ]);
 
-        $admin = \App\Models\User::factory(1)->create([
+        $admin = \App\Models\User::factory()->create([
             'name' => 'Frank Leimbergh D. Armodia',
             'email' => 'farmodia@gmail.com',
             'password' => bcrypt('admin123'),
+            'contact_number' => '09123456789',
             'user_type' => 'CHO',
         ]);
 
-        \App\Models\CityHealthWorker::factory(1)->create([
+
+        \App\Models\CityHealthWorker::factory()->create([
             'user_id' => $admin->id,
             'admin' => 1
         ]);

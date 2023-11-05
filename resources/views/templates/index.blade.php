@@ -6,6 +6,13 @@
         </div>
     </x-slot>
     <x-panel>
-
+        <div class="grid grid-cols-10 gap-4">
+            @foreach ($templates as $template)
+                <div class="border p-4 text-center">
+                    <x-icon name="spreadsheet" class="fill-white" />
+                    {{ $template->name }}
+                </div>
+            @endforeach
+        </div>
     </x-panel>
 </x-app-layout>
