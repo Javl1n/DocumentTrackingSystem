@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\DocumentTemplateController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,12 +16,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('bwh/documents', [DocumentController::class, 'index'])
-    ->middleware(['auth', 'verified'])->name('BHW/Documents');
+
+
+
+Route::get('bhw/documents', [DocumentController::class, 'index'])
+    ->middleware(['auth', 'verified',])->name('BHW/Home');
 
 
 // Route::get('/dashboard', function () {
@@ -28,6 +29,19 @@ Route::get('bwh/documents', [DocumentController::class, 'index'])
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::get('/', [DocumentController::class, 'index'])->name('Home');
+    // Route::get('documents', [DocumentController::class, 'index'])
+    //     ->name('Home');
+
+    // Route::middleware('role:BHW')->group(function () {
+
+    // });
+
+    Route::middleware('role:CHO')->group(function () {
+        Route::get('templates', [DocumentTemplateController::class, 'index'])->name('templates');
+        Route::get('templates/create', [DocumentTemplateController::class, 'create']);
+    });
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');

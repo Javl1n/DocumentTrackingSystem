@@ -43,4 +43,14 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public function barangayAccount()
+    {
+        return $this->hasOne(BarangayHealthWorker::class);
+    }
+
+    public function cityAccount()
+    {
+        return $this->hasOne(BarangayHealthWorker::class);
+    }
 }

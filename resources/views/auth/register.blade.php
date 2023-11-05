@@ -39,8 +39,12 @@
                 </ul>
             </div>
             <div x-show="cho" class=" border-none w-[399px] z-50 mt-6 rounded-lg">
-                <x-input-label for="name" :value="__('Name')" />
-                <x-text-input id="key" class="block mt-1 w-full" type="password" name="key" :value="old('key')" placeholder="Key" autofocus autocomplete="name" />
+                <x-input-label for="key" :value="__('CHO Key')" />
+                <x-text-input
+                    id="key"
+                    class="block mt-1 w-full"
+                    type="password"
+                    name="key" autocomplete="password" />
                 <x-input-error :messages="$errors->get('key')" class="mt-2" />
             </div>
             <div x-show="bhw" class=" border-none w-[399px] z-50 mt-6 rounded-lg">

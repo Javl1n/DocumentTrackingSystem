@@ -14,6 +14,7 @@ return new class extends Migration {
             $table->id();
             $table->string('name')->unique();
             $table->integer('update_cycle');
+            // $table->string('file');
             $table->timestamps();
         });
     }
