@@ -21,7 +21,7 @@
             @include('layouts._navigation')
             <div class="flex flex-grow h-full">
                 @if($sidebar)
-                    @include('layouts._sidebar')
+                    {{ $sidebar }}
                 @endif
 
                 <!-- Page Content -->

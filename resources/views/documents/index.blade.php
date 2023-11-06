@@ -1,4 +1,7 @@
 <x-app-layout :sidebar="true">
+    <x-slot name="sidebar">
+        @include('documents._sidebar')
+    </x-slot>
     <x-slot name="header">
         {{ __('Documents') }}
     </x-slot>

@@ -1,4 +1,5 @@
 <x-app-layout :sidebar="false">
+
     <x-slot name="header">
         <div class="flex justify-between">
             {{ __('Templates') }}
@@ -6,7 +7,7 @@
         </div>
     </x-slot>
     <x-panel>
-        <div class="grid grid-cols-10 gap-4">
+        <div class="grid grid-cols-5 gap-4">
             @foreach ($templates as $template)
                 <div class="border p-4 text-center">
                     <x-icon name="spreadsheet" class="fill-white" />

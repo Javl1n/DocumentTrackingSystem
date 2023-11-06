@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\DocumentDateController;
 use App\Http\Controllers\DocumentTemplateController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -47,6 +48,10 @@ Route::middleware('auth')->group(function () {
         Route::get('templates', [DocumentTemplateController::class, 'index'])->name('templates');
         Route::post('templates', [DocumentTemplateController::class, 'store']);
         Route::get('templates/create', [DocumentTemplateController::class, 'create']);
+    });
+
+    Route::middleware(['role:BHW'])->group(function () {
+        Route::get('documents/create/{ template }', DocumentDateController::class, 'create')
     });
 
 
