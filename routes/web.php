@@ -51,9 +51,9 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::middleware(['role:BHW'])->group(function () {
-        Route::get('documents/create/{ template }', DocumentDateController::class, 'create')
+        Route::get('documents/create/{template}', [DocumentController::class, 'create']);
+        Route::post('documents', [DocumentController::class, 'store']);
     });
-
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -53,23 +53,26 @@
                         </div>
                         <div x-show="open" x-collapse>
                             <ul class="ms-5 mt-4">
-                                @foreach ($documents->where('document_template_id', $template->id) as $document)
-                                    <li>ASDldj
-                                        <ul class="ms-10">
-                                            <li>ASDldj</li>
-                                        </ul>
-                                    </li>
-                                @endforeach
-                                <a href="/documents/create/{{ $template->id }}" class="hover:text-blue-500">
-                                    <li class="text-base flex">
-                                        <span>
-                                            <x-icon name="circle" class="w-5 ms-0 mt-0.5" />
-                                        </span>
-                                        <span>
-                                            Create New
-                                        </span>
-                                    </li>
-                                </a>
+                                @php
+                                    $documentwithtemplate = $documents->where('document_template_id', $template->id)->first()
+                                @endphp
+                                @if ($documentwithtemplate)
+                                    @foreach ($documentDates->where('document_id', $documentwithtemplate->id) as $document)
+                                    <li>{{ $document->created_at }}</li>
+                                    @endforeach
+                                @endif
+                                @bhw
+                                    <a href="/documents/create/{{ $template->id }}" class="hover:text-blue-500">
+                                        <li class="text-base flex">
+                                            <span>
+                                                <x-icon name="circle" class="w-5 ms-0 mt-0.5" />
+                                            </span>
+                                            <span>
+                                                Create New
+                                            </span>
+                                        </li>
+                                    </a>
+                                @endbhw
                             </ul>
                         </div>
                     </div>
