@@ -4,9 +4,9 @@ import laravel from 'laravel-vite-plugin';
 export default defineConfig({
     server: {
         hmr: {
-          host: '192.168.1.48',
+            host: '192.168.1.2',
         }
-    },  
+    },
     plugins: [
         laravel({
             input: [
@@ -16,5 +16,5 @@ export default defineConfig({
             refresh: true,
         }),
     ],
-    
+
 });
