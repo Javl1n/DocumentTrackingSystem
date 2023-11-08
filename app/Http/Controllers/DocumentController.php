@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barangay;
 use App\Models\BarangayHealthWorker;
 use App\Models\Document;
 use App\Models\DocumentDate;
@@ -16,10 +17,19 @@ class DocumentController extends Controller
         // $template =DocumentTemplate::first();
         // $documents = Document::all()->paginate(10);
         // ddd($documents->where('document_template_id', $template->id)->first());
+        if (auth()->user()->user_type === 'BHW') {
+            $worker = BarangayHealthWorker::where('user_id', auth()->user()->id)->first();
+            $documents = Document::where('barangay_id', $worker->barangay_id)->get();
+        } else {
+            $documents = Document::where('barangay_id' , request(['barangay']))->get();
+        }
+
         return view('documents.index', [
-            'documents' => Document::paginate(10),
+            'documents' => $documents,
             'documentDates' => DocumentDate::all(),
             'templates' => DocumentTemplate::all(),
+            'barangays' => Barangay::all(),
+            'currentBarangay' => Barangay::firstWhere('id', request('barangay'))
         ]);
     }
     public function create(DocumentTemplate $template) {

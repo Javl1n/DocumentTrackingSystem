@@ -23,7 +23,7 @@
                 </tr>
               @endforeach
             </tbody>
-            {{ $documents->links() }}
+            {{-- {{ $documents->links() }} --}}
         </table>
     </x-panel>
 </x-app-layout>

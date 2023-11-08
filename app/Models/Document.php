@@ -11,6 +11,15 @@ class Document extends Model
 
     protected $with = ['barangay', 'template', 'dates'];
 
+    // public function scopeFilter($query, array $filters)
+    // {
+    //     $query->when($filters['barangay'] ?? false, fn($query, $category) =>
+    //         $query->whereHas('', fn ($query) =>
+    //             $query->where('slug', $category)
+    //         )
+    //     );
+    // }
+
     public function barangay(){
         return $this->belongsTo(Barangay::class);
     }

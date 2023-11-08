@@ -32,52 +32,40 @@
             </x-slot>
         </x-dropdown>
     </div> --}}
-    <form action="/" method="post">
-        @csrf
-        <div class="grid grid-cols-5">
-            <x-text-input class="w-full col-span-5" />
-        </div>
-
-    </form>
-
-        <ul class="mt-6 text-lg">
-            @foreach($templates as $template)
-                <li class="p-2">
-                    <div x-data="{open: false}">
-                        <div class="flex">
-                            <span @click ="open =! open">
-                                <x-icon name="dropdown-arrow" class="w-4 mt-1 me-2">
-                                </x-icon>
-                            </span>
-                            <h1 class="text-lg" href="{{ route('Home') }}">{{ $template->name }}</h1>
-                        </div>
-                        <div x-show="open" x-collapse>
-                            <ul class="ms-5 mt-4">
-                                @php
-                                    $documentwithtemplate = $documents->where('document_template_id', $template->id)->first()
-                                @endphp
-                                @if ($documentwithtemplate)
-                                    @foreach ($documentDates->where('document_id', $documentwithtemplate->id) as $document)
-                                    <li>{{ $document->created_at }}</li>
-                                    @endforeach
-                                @endif
-                                @bhw
-                                    <a href="/documents/create/{{ $template->id }}" class="hover:text-blue-500">
-                                        <li class="text-base flex">
-                                            <span>
-                                                <x-icon name="circle" class="w-5 ms-0 mt-0.5" />
-                                            </span>
-                                            <span>
-                                                Create New
-                                            </span>
-                                        </li>
-                                    </a>
-                                @endbhw
-                            </ul>
-                        </div>
+    @cho
+        <x-dropdown align="left" width="48">
+            <x-slot name="trigger">
+                <button class="inline-flex items-center px-3 py-5 border border-transparent text-regular leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150 w-full justify-between">
+                    <div>{{ $currentBarangay->name ?? "Barangay" }}</div>
+                    <div class="ml-1">
+                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
                     </div>
-                </li>
-            @endforeach
-        </ul>
-
+                </button>
+            </x-slot>
+            <x-slot name="content">
+                @foreach ($barangays as $barangay)
+                    <x-dropdown-link href="/?barangay={{ $barangay->id }}">
+                        {{ __($barangay->name) }}
+                    </x-dropdown-link>
+                @endforeach
+            </x-slot>
+        </x-dropdown>
+        @isset($currentBarangay)
+            <div class=" mt-6 h-[79vh] overflow-y-auto">
+                @include('documents._navigator')
+            </div>
+        @endisset
+        @empty($currentBarangay)
+            <div class="text-center text-lg text-white font-bold mt-10">
+                Select a barangay first
+            </div>
+        @endempty
+    @endcho
+    @bhw
+        <div class=" h-[87vh] overflow-y-auto">
+            @include('documents._navigator')
+        </div>
+    @endbhw
 </aside>
