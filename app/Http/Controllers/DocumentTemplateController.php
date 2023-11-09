@@ -9,13 +9,13 @@ class DocumentTemplateController extends Controller
 {
     public function index()
     {
-        return view("templates.index", [
+        return view("admin.templates.index", [
             "templates" => DocumentTemplate::latest()->paginate(10),
         ]);
     }
     public function create()
     {
-        return view("templates.create");
+        return view("admin.templates.create");
     }
     public function store(Request $request)
     {
