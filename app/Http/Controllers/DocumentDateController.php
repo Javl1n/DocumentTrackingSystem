@@ -15,22 +15,25 @@ class DocumentDateController extends Controller
         // check for barangay id
             if(Gate::allows('cho')){
                 $barangay = request(['barangay']);
-            } else if (Gate::allows('bhw')){
+            } elseif (Gate::allows('bhw')){
                 $worker = BarangayHealthWorker::where('user_id', auth()->user()->id)->first();
                 $barangay = $worker->barangay_id;
             }
         // get documents from templates
-        $document = Document::
-                        where('barangay_id' , $barangay)
-                        ->where('document_template_id', $template->id)
-                        ->first();
         // get document dates from documents
-        $documentDate = DocumentDate::
-                        where('document_id', $document->id)
+        $documentDates = DocumentDate::latest()->
+                        where(
+                            'document_id',
+                            Document::
+                                where('barangay_id' , $barangay)
+                                ->where('document_template_id', $template->id)
+                                ->first()->id
+                        )
                         ->get();
+
         return view('documents.dates.index', [
             'template'=> $template,
-            'documents' => $documentDate
+            'documents' => $documentDates
         ]);
     }
 }

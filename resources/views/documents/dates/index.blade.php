@@ -10,10 +10,13 @@
             <div class="col-span-7 font-bold text-center">Date Published</div>
             <div class="col-span-2 font-bold">Published By</div>
             <div class="col-span-1"></div>
-            <div class="col-span-7">November</div>
-            <div class="col-span-2">Me</div>
-            <div class="col-span-1"><a href="" class="bg-blue-500 rounded-md px-2 py-2">Download</a></div>
-
+            @foreach ($documents as $document)
+                <div class="col-span-7">{{ date_format($document->created_at, "F d") }}</div>
+                <div class="col-span-2">{{ $document->publisher->name }}</div>
+                <div class="col-span-1">
+                    <a href="" class="bg-blue-500 rounded-md px-2 py-2">Download</a>
+                </div>
+            @endforeach
         </div>
     </x-panel>
 </x-app-layout>
