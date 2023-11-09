@@ -23,7 +23,7 @@ class DocumentDateController extends Controller
         $document = Document::
                         where('barangay_id' , $barangay)
                         ->where('document_template_id', $template->id)
-                        ->get();
+                        ->first();
         // get document dates from documents
         $documentDate = DocumentDate::
                         where('document_id', $document->id)
