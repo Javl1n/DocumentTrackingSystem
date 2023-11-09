@@ -19,64 +19,19 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $admin = User::factory()->create([
+        CityHealthWorker::factory()->for(User::factory()->create([
             'name' => 'Frank Leimbergh D. Armodia',
             'email' => 'farmodia@gmail.com',
             'password' => bcrypt('admin123'),
             'contact_number' => '09123456789',
             'user_type' => 'CHO',
-        ]);
-
-        CityHealthWorker::factory()->create([
-            'user_id' => $admin->id,
+        ]))->create([
             'admin' => 1
         ]);
 
-        $barangay1 = Barangay::factory()->create([
-            'name' => 'Apopong'
+        $this->call([
+            BarangayDocumentSeeder::class
         ]);
-
-        Barangay::factory()->create([
-            'name' => 'Uhaw'
-        ]);
-
-        $bhw1 = User::factory()->create([
-            'name' => 'Vonne Egonio',
-            'email' => 'vonne@gmail.com',
-            'password' => bcrypt('admin123'),
-            'contact_number' => '09123456789',
-            'user_type' => 'BHW',
-        ]);
-
-        BarangayHealthWorker::create([
-            'user_id' => $bhw1->id,
-            'barangay_id' => $barangay1->id
-        ]);
-
-        BarangayHealthWorker::create([
-            'user_id' => $bhw1->id,
-            'barangay_id' => $barangay1->id
-        ]);
-
-        DocumentTemplate::factory(10)->create();
-
-        DocumentTemplate::all()
-            ->map(
-                fn($template)  =>
-                Document::firstOrCreate([
-                    'document_template_id' => $template->id,
-                    'barangay_id' =>  $barangay1->id,
-                ])
-            );
-
-        Document::all()
-            ->map(
-                fn($document) =>
-                    DocumentDate::create([
-                        'document_id'=> $document->id,
-                        'user_id'=> $bhw1->id,
-                    ])
-            );
 
         // \App\Models\User::factory()->create([
         //     'name' => 'Test User',
