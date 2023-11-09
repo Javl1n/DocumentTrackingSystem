@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Blade;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,12 +24,19 @@ class AppServiceProvider extends ServiceProvider
     {
         Model::unguard();
 
+        Gate::define('bhw', function ($user) {
+            return $user->user_type === 'BHW';
+        });
+        Gate::define('cho', function ($user) {
+            return $user->user_type === 'CHO';
+        });
+
         Blade::if('bhw', function () {
-            return auth()->user()->user_type === 'BHW';
+            return auth()->user()?->can('bhw');
         });
 
         Blade::if('cho', function () {
-            return auth()->user()->user_type === 'CHO';
+            return auth()->user()?->can('cho');
         });
     }
 }

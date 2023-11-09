@@ -6,36 +6,14 @@
         Documents<span class="font-light text-gray-500">/{{ $template->name }}</span>
     </x-slot>
     <x-panel>
-        {{-- @cho
-            @isset($currentBarangay)
-            <div class="grid grid-cols-5 gap-5">
-                <a href="/templates/create">
-                        <div class="text-center shadow-lg rounded-xl bg-slate-600 h-full flex">
-                            <x-icon name="plus-circle" height="30" class="m-auto fill-slate-900" />
-                        </div>
-                </a>
-                @foreach ($templates as $template)
-                    <a href="/template/{{ $template->slug }}">
-                        <div class="text-center shadow-lg rounded-xl bg-slate-900 py-10">{{ $template->name }}</div>
-                    </a>
-                @endforeach
-            </div>
-            @endisset
-            @empty($currentBarangay)
-                <div class="text-center text-sm text-gray-300 mt-10">
-                    No Barangay Selected
-                </div>
-            @endempty
-        @endcho
-        @bhw
-        <div class="grid grid-cols-5 gap-5">
-            @foreach ($templates as $template)
-                <a href="/template/{{ $template->slug }}">
-                    <div class="text-center shadow-lg rounded-xl bg-slate-900 py-10">{{ $template->name }}</div>
-                </a>
-            @endforeach
+        <div class="grid grid-cols-10 gap-y-5">
+            <div class="col-span-7 font-bold text-center">Date Published</div>
+            <div class="col-span-2 font-bold">Published By</div>
+            <div class="col-span-1"></div>
+            <div class="col-span-7">November</div>
+            <div class="col-span-2">Me</div>
+            <div class="col-span-1"><a href="" class="bg-blue-500 rounded-md px-2 py-2">Download</a></div>
+
         </div>
-        @endbhw --}}
-        {{-- {{ $documents->links() }} --}}
     </x-panel>
 </x-app-layout>

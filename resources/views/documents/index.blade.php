@@ -1,12 +1,11 @@
 <x-app-layout :sidebar="true">
     <x-slot name="sidebar">
-        @include('documents._sidebar')
+        <x-documents.sidebar />
     </x-slot>
     <x-slot name="header">
         {{ __('Documents') }}
     </x-slot>
     <x-panel>
-        
         @cho
             @isset($currentBarangay)
             <div class="grid grid-cols-5 gap-5">
@@ -16,7 +15,7 @@
                         </div>
                 </a>
                 @foreach ($templates as $template)
-                    <a href="/template/{{ $template->slug }}">
+                    <a href="/template/{{ $template->slug }}?barangay={{ $currentBarangay->id }}">
                         <div class="text-center shadow-lg rounded-xl bg-slate-900 py-10">{{ $template->name }}</div>
                     </a>
                 @endforeach
@@ -37,6 +36,6 @@
             @endforeach
         </div>
         @endbhw
-        {{-- {{ $documents->links() }} --}} 
+        {{-- {{ $documents->links() }} --}}
     </x-panel>
 </x-app-layout>

@@ -13,10 +13,15 @@ class DocumentDate extends Model
     //     'created_at' => 'date:Y-m-d'
     // ];
 
-    // protected $with = ['document'];
+    protected $with = ['document', 'publisher'];
 
     public function document()
     {
         return $this->belongsTo(Document::class);
+    }
+
+    public function publisher()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

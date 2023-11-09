@@ -1,4 +1,4 @@
-<aside class="w-1/4 p-7 border-r border-gray-500  text-white">
+<aside class="w-1/4 p-7 border-r border-gray-600  text-white">
     <!-- Settings Dropdown -->
     {{-- <div class="hidden lg:ml-0 sm:flex sm:items-center sm:ml-6">
         <x-dropdown align="right" width="full">

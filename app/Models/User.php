@@ -53,4 +53,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(BarangayHealthWorker::class);
     }
+
+    public function documets()
+    {
+        return $this->hasMany(DocumentDate::class);
+    }
 }
