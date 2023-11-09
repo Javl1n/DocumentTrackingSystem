@@ -1,13 +1,12 @@
 <x-app-layout :sidebar="true">
     <x-slot name="sidebar">
-        @include('documents._sidebar')
+        <x-documents.sidebar />
     </x-slot>
     <x-slot name="header">
-        {{ __('Documents') }}
+        Documents<span class="font-light text-gray-500">/{{ $template->name }}</span>
     </x-slot>
     <x-panel>
-        
-        @cho
+        {{-- @cho
             @isset($currentBarangay)
             <div class="grid grid-cols-5 gap-5">
                 <a href="/templates/create">
@@ -36,7 +35,7 @@
                 </a>
             @endforeach
         </div>
-        @endbhw
-        {{-- {{ $documents->links() }} --}} 
+        @endbhw --}}
+        {{-- {{ $documents->links() }} --}}
     </x-panel>
 </x-app-layout>

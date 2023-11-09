@@ -54,7 +54,7 @@
         </x-dropdown>
         @isset($currentBarangay)
             <div class=" mt-6 h-[79vh] overflow-y-auto">
-                @include('documents._navigator')
+                @include('components.documents._navigator')
             </div>
         @endisset
         @empty($currentBarangay)
@@ -65,7 +65,7 @@
     @endcho
     @bhw
         <div class=" h-[87vh] overflow-y-auto">
-            @include('documents._navigator')
+            @include('components.documents._navigator')
         </div>
     @endbhw
 </aside>

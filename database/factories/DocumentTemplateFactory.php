@@ -19,6 +19,7 @@ class DocumentTemplateFactory extends Factory
         return [
             'name' => fake()->unique()->word(),
             'update_cycle' => fake()->numberBetween(1, 12),
+            'slug' => fake()->unique()->slug(),
         ];
     }
 }

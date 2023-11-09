@@ -21,23 +21,25 @@ use Illuminate\Support\Facades\Route;
 
 
 
-Route::get('bhw/documents', [DocumentController::class, 'index'])
-    ->middleware(['auth', 'verified',])->name('BHW/Home');
-
 
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
 
 
-Route::middleware(['role:CHO', 'auth'])->group(function () {
-    Route::get('templates', [DocumentTemplateController::class, 'index'])->name('templates');
-    Route::get('templates/create', [DocumentTemplateController::class, 'create']);
-});
+// Route::middleware(['role:CHO', 'auth'])->group(function () {
+//     Route::get('templates', [DocumentTemplateController::class, 'index'])->name('templates');
+//     Route::get('templates/create', [DocumentTemplateController::class, 'create']);
+// });
+
+
 
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [DocumentController::class, 'index'])->name('Home');
+
+    Route::get('/template/{template:slug}', [DocumentDateController::class, 'index']);
+    
     // Route::get('documents', [DocumentController::class, 'index'])
     //     ->name('Home');
 
