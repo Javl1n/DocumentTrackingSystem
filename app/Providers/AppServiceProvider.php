@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\User;
 use Blade;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Gate;
@@ -24,10 +25,10 @@ class AppServiceProvider extends ServiceProvider
     {
         Model::unguard();
 
-        Gate::define('bhw', function ($user) {
+        Gate::define('bhw', function (User $user) {
             return $user->user_type === 'BHW';
         });
-        Gate::define('cho', function ($user) {
+        Gate::define('cho', function (User $user) {
             return $user->user_type === 'CHO';
         });
 

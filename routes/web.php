@@ -1,9 +1,12 @@
 <?php
 
+use App\Http\Controllers\CityDocumentController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DocumentDateController;
 use App\Http\Controllers\DocumentTemplateController;
 use App\Http\Controllers\ProfileController;
+use App\Models\BarangayHealthWorker;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -36,17 +39,30 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/', [DocumentController::class, 'index'])->name('Home');
+    Route::get('/', function () {
+        if(Gate::allows('cho')) {
+            return redirect('/cho');
+        } else {
+            $barangay = BarangayHealthWorker::where('user_id', auth()->user()->id)->first()->barangay;
+            return redirect("/bhw/$barangay->slug");
+        }
+
+    })->name('Home');
+
+    Route::group([
+        'prefix'=> 'bhw',
+        'can' => 'bhw'
+    ], function () {
+        Route::get('/{barangay:slug}', [DocumentController::class, 'index']);
+    });
 
     Route::get('/template/{template:slug}', [DocumentDateController::class, 'index']);
     
-    // Route::get('documents', [DocumentController::class, 'index'])
-    //     ->name('Home');
-
-    // Route::middleware('role:BHW')->group(function () {
-
-    // });
-    Route::middleware(['role:CHO'])->group(function () {
+    Route::group([
+        'prefix'=> 'cho',
+        'can' => 'cho',
+    ], function () {
+        Route::get('/', [CityDocumentController::class,'index']);
         Route::get('templates', [DocumentTemplateController::class, 'index'])->name('templates');
         Route::post('templates', [DocumentTemplateController::class, 'store']);
         Route::get('templates/create', [DocumentTemplateController::class, 'create']);

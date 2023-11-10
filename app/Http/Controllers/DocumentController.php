@@ -9,27 +9,23 @@ use App\Models\DocumentDate;
 use App\Models\DocumentTemplate;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class DocumentController extends Controller
-{
-    public function index()
+{  
+    public function index(Barangay $barangay)
     {
         // $template =DocumentTemplate::first();
         // $documents = Document::all()->paginate(10);
         // ddd($documents->where('document_template_id', $template->id)->first());
-        if (auth()->user()->user_type === 'BHW') {
-            $worker = BarangayHealthWorker::where('user_id', auth()->user()->id)->first();
-            $documents = Document::where('barangay_id', $worker->barangay_id)->get();
-        } else {
-            $documents = Document::where('barangay_id' , request(['barangay']))->get();
-        }
+
+        $documents = Document::where('barangay_id', $barangay->id)->get();
+        
 
         return view('documents.index', [
             'documents' => $documents,
             'documentDates' => DocumentDate::all(),
             'templates' => DocumentTemplate::all(),
-            'barangays' => Barangay::all(),
-            'currentBarangay' => Barangay::firstWhere('id', request('barangay'))
         ]);
     }
     public function create(DocumentTemplate $template) {

@@ -6,7 +6,7 @@
     </x-slot>
 
     <x-panel class="flex-auto w-2/4 mx-auto">
-        <form action="/templates" method="post" enctype="multipart/form-data">
+        <form action="/cho/templates" method="post" enctype="multipart/form-data">
             @csrf
             <x-form.text-input-group name="title" type="text" />
             <x-form.text-input-group name="cycle" type="number" label="Update Cycle" />

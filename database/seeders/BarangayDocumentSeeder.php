@@ -10,6 +10,7 @@ use App\Models\DocumentTemplate;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Str;
 
 class BarangayDocumentSeeder extends Seeder
 {
@@ -18,9 +19,14 @@ class BarangayDocumentSeeder extends Seeder
      */
     public function run(): void
     {
+        $barangayName = 'Apopong';
+
         $barangay = Barangay::factory()->create([
-            'name' => 'Apopong'
+            'name' => $barangayName,
+            'slug' => Str::slug($barangayName, '-'),
         ]);
+
+        Barangay::factory(20)->create();
 
         BarangayHealthWorker::factory()
             ->for($bhw = User::factory()->create([
@@ -34,7 +40,7 @@ class BarangayDocumentSeeder extends Seeder
                 'barangay_id' => $barangay->id
             ]);
 
-        for($i = 0; $i < 20; $i++)
+        for($i = 0; $i < 100; $i++)
         {
             DocumentDate::factory()
             ->for(
