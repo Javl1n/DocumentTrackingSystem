@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\City;
 
+use App\Http\Controllers\Controller;
 use App\Models\Barangay;
 use App\Models\Document;
 use App\Models\DocumentDate;
 use App\Models\DocumentTemplate;
 use Illuminate\Http\Request;
 
-class CityDocumentController extends Controller
+class DocumentController extends Controller
 {
     public function index()
     {

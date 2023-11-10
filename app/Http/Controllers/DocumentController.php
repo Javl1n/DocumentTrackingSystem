@@ -15,17 +15,9 @@ class DocumentController extends Controller
 {  
     public function index(Barangay $barangay)
     {
-        // $template =DocumentTemplate::first();
-        // $documents = Document::all()->paginate(10);
-        // ddd($documents->where('document_template_id', $template->id)->first());
-
-        $documents = Document::where('barangay_id', $barangay->id)->get();
-        
-
         return view('documents.index', [
-            'documents' => $documents,
-            'documentDates' => DocumentDate::all(),
-            'templates' => DocumentTemplate::all(),
+            'templates' => DocumentTemplate::paginate(30),
+            'barangay' => $barangay
         ]);
     }
     public function create(DocumentTemplate $template) {

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\CityDocumentController;
+use App\Http\Controllers\City\BarangayDocumentController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DocumentDateController;
 use App\Http\Controllers\DocumentTemplateController;
@@ -62,7 +62,8 @@ Route::middleware('auth')->group(function () {
         'prefix'=> 'cho',
         'can' => 'cho',
     ], function () {
-        Route::get('/', [CityDocumentController::class,'index']);
+        Route::get('/', [BarangayDocumentController::class,'index']);
+        Route::get('/{barangay:slug}', [DocumentController::class, 'index']);
         Route::get('templates', [DocumentTemplateController::class, 'index'])->name('templates');
         Route::post('templates', [DocumentTemplateController::class, 'store']);
         Route::get('templates/create', [DocumentTemplateController::class, 'create']);

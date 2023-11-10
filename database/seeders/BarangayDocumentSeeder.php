@@ -26,7 +26,7 @@ class BarangayDocumentSeeder extends Seeder
             'slug' => Str::slug($barangayName, '-'),
         ]);
 
-        Barangay::factory(20)->create();
+        Barangay::factory(10)->create();
 
         BarangayHealthWorker::factory()
             ->for($bhw = User::factory()->create([

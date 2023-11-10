@@ -13,12 +13,16 @@ use Illuminate\View\Component;
 
 class Sidebar extends Component
 {
+    protected $documents;
+
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(
+        public string $barangay,
+    )
     {
-        //
+        $this->documents = Document::where('barangay_id' , $barangay)->get();
     }
 
     /**
@@ -26,18 +30,10 @@ class Sidebar extends Component
      */
     public function render(): View|Closure|string
     {
-        if (auth()->user()->user_type === 'BHW') {
-            $worker = BarangayHealthWorker::where('user_id', auth()->user()->id)->first();
-            $documents = Document::where('barangay_id', $worker->barangay_id)->get();
-        } else {
-            $documents = Document::where('barangay_id' , request(['barangay']))->get();
-        }
         return view('components.documents.sidebar', [
-            'documents' => $documents,
+            'documents' => $this->documents,
             'documentDates' => DocumentDate::all(),
             'templates' => DocumentTemplate::all(),
-            'barangays' => Barangay::all(),
-            'currentBarangay' => Barangay::firstWhere('id', request('barangay'))
         ]);
         // return view('components.documents.sidebar');
     }
