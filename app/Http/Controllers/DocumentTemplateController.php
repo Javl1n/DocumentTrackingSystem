@@ -31,6 +31,6 @@ class DocumentTemplateController extends Controller
             'slug' => Str::slug($request->title, '-'),
         ]);
 
-        return redirect('/templates');
+        return redirect('/');
     }
 }

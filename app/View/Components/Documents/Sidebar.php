@@ -33,7 +33,7 @@ class Sidebar extends Component
         return view('components.documents.sidebar', [
             'documents' => $this->documents,
             'documentDates' => DocumentDate::all(),
-            'templates' => DocumentTemplate::all(),
+            'templates' => DocumentTemplate::latest()->get(),
         ]);
         // return view('components.documents.sidebar');
     }

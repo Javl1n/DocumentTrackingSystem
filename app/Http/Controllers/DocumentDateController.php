@@ -13,7 +13,7 @@ class DocumentDateController extends Controller
 {
     public function index(DocumentTemplate $template){
             if(Gate::allows('cho')){
-                $barangay = request(['barangay']);
+                $barangay = request()->barangay;
             } elseif (Gate::allows('bhw')){
                 $worker = BarangayHealthWorker::where('user_id', auth()->user()->id)->first();
                 $barangay = $worker->barangay_id;
@@ -27,10 +27,11 @@ class DocumentDateController extends Controller
                                 ->first()?->id
                         )
                         ->get();
-
+        
         return view('documents.dates.index', [
             'template'=> $template,
-            'documents' => $documentDates
+            'documents' => $documentDates,
+            'barangay' => $barangay,
         ]);
     }
 }

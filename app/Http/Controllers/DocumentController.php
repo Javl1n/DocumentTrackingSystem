@@ -16,7 +16,7 @@ class DocumentController extends Controller
     public function index(Barangay $barangay)
     {
         return view('documents.index', [
-            'templates' => DocumentTemplate::paginate(30),
+            'templates' => DocumentTemplate::latest()->paginate(30),
             'barangay' => $barangay
         ]);
     }
@@ -37,6 +37,8 @@ class DocumentController extends Controller
             'user_id'=> auth()->user()->id,
         ]);
 
-        return redirect('')->with('success','Document Added Successfully');
+        $template = DocumentTemplate::where('id' , $request->template)->first()->slug;
+
+        return redirect("/template/$template")->with('success','Document Added Successfully');
     }
 }

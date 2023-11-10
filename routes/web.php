@@ -54,9 +54,10 @@ Route::middleware('auth')->group(function () {
         'can' => 'bhw'
     ], function () {
         Route::get('/{barangay:slug}', [DocumentController::class, 'index']);
+        Route::get('documents/create/{template:slug}', [DocumentController::class, 'create']);
+        Route::post('documents', [DocumentController::class, 'store']);
     });
 
-    Route::get('/template/{template:slug}', [DocumentDateController::class, 'index']);
     
     Route::group([
         'prefix'=> 'cho',
@@ -68,11 +69,9 @@ Route::middleware('auth')->group(function () {
         Route::post('templates', [DocumentTemplateController::class, 'store']);
         Route::get('templates/create', [DocumentTemplateController::class, 'create']);
     });
+    Route::get('/template/{template:slug}', [DocumentDateController::class, 'index']);
 
-    Route::middleware(['role:BHW'])->group(function () {
-        Route::get('documents/create/{template}', [DocumentController::class, 'create']);
-        Route::post('documents', [DocumentController::class, 'store']);
-    });
+    // Route::get('/{barangay:slug}', [DocumentController::class, 'index']);
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

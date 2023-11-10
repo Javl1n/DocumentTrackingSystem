@@ -22,7 +22,7 @@
                                     @endforeach
                                 @endif
                                 @bhw
-                                    <a href="/documents/create/{{ $template->id }}" class="hover:text-blue-500">
+                                    <a href="/bhw/documents/create/{{ $template->slug }}" class="hover:text-blue-500">
                                         <li class="text-base flex">
                                             <span>
                                                 <x-icon name="circle" class="w-5 ms-0 mt-0.5" />

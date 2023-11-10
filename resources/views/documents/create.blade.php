@@ -6,7 +6,7 @@
     </x-slot>
 
     <x-panel class="flex-auto w-2/4 mx-auto">
-        <form action="/documents" method="post" enctype="multipart/form-data">
+        <form action="bhw/documents" method="post" enctype="multipart/form-data">
             @csrf
             <x-text-input name="template" value="{{ $template->id }}" type="hidden" />
             <h1>Download Template</h1>
