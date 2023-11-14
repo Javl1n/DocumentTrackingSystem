@@ -17,7 +17,7 @@ class DocumentTemplateFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->unique()->word(),
+            'name' => fake()->unique()->catchPhrase(),
             'update_cycle' => fake()->numberBetween(1, 12),
             'slug' => fake()->unique()->slug(),
         ];

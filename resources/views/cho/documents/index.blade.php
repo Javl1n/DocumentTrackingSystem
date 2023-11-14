@@ -6,7 +6,6 @@
         {{ __('Documents') }}
     </x-slot>
     <x-panel>
-        
             @isset($currentBarangay)
             <div class="grid grid-cols-5 gap-5">
                 <a href="/templates/create">

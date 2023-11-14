@@ -17,7 +17,7 @@ class BarangayFactory extends Factory
     public function definition(): array
     {
         return [
-            "name" => $this->faker->word,
+            "name" => $this->faker->city,
             "slug" => $this->faker->slug,
         ];
     }

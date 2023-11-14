@@ -16,7 +16,7 @@ class DocumentController extends Controller
     public function index(Barangay $barangay)
     {
         return view('documents.index', [
-            'templates' => DocumentTemplate::latest()->paginate(30),
+            'templates' => DocumentTemplate::latest()->paginate(25),
             'barangay' => $barangay
         ]);
     }

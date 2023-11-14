@@ -1,31 +1,44 @@
+
 <aside class="w-1/4 p-7 border-r border-gray-600  text-white">
-        <x-dropdown align="left" width="full">
-            <x-slot name="trigger">
-                <button class="inline-flex items-center px-3 py-5 border border-transparent text-regular leading-4 font-medium rounded-md text-gray-500 dark:text-gray-400 bg-white dark:bg-gray-800 hover:text-gray-700 dark:hover:text-gray-300 focus:outline-none transition ease-in-out duration-150 w-full justify-between">
-                    <div>{{ $currentBarangay->name ?? "Barangay" }}</div>
-                    <div class="ml-1">
-                        <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                            <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                        </svg>
+    <div class=" h-[87vh] overflow-y-auto">
+        <ul class="mt-2 text-lg">
+            @foreach($templates as $template)
+                <li class="p-2">
+                    <div x-data="{open: false}">
+                        <div class="flex">
+                            <span @click="open =! open">
+                                <x-icon name="dropdown-arrow" class="w-4 mt-1 me-2 -rotate-90" x-bind:class="open ? 'rotate-0' : ''">
+                                </x-icon>
+                            </span>
+                            <a class="text-lg" href="/template/{{ $template->slug }}?barangay={{ $barangay }}">{{ $template->name }}</a>
+                        </div>
+                        <div x-show="open" x-collapse>
+                            <ul class="ms-5 mt-4">
+                                @php
+                                    $document = $documents->where('document_template_id', $template->id)->first()
+                                @endphp
+                                @if ($document)
+                                    @foreach ($documentDates->where('document_id', $document->id) as $document)
+                                        <li>{{ date_format($document->created_at, "F d") }}</li>
+                                    @endforeach
+                                @endif
+                                @bhw
+                                    <a href="/bhw/documents/create/{{ $template->slug }}" class="hover:text-blue-500">
+                                        <li class="text-base flex">
+                                            <span>
+                                                <x-icon name="circle" class="w-5 ms-0 mt-0.5" />
+                                            </span>
+                                            <span>
+                                                Create New
+                                            </span>
+                                        </li>
+                                    </a>
+                                @endbhw
+                            </ul>
+                        </div>
                     </div>
-                </button>
-            </x-slot>
-            <x-slot name="content">
-                @foreach ($barangays as $barangay)
-                    <x-dropdown-link href="?barangay={{ $barangay->id }}">
-                        {{ __($barangay->name) }}
-                    </x-dropdown-link>
-                @endforeach
-            </x-slot>
-        </x-dropdown>
-        @isset($currentBarangay)
-            <div class=" mt-6 h-[79vh] overflow-y-auto">
-                @include('components.documents._navigator')
-            </div>
-        @endisset
-        @empty($currentBarangay)
-            <div class="text-center text-lg text-white font-bold mt-10">
-                Select a barangay first
-            </div>
-        @endempty
+                </li>
+            @endforeach
+        </ul>
+    </div>
 </aside>

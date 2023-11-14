@@ -15,9 +15,10 @@ class Sidebar extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct()
+    public function __construct(
+        public int $barangay,
+    )
     {
-        //
     }
 
     /**
@@ -26,7 +27,7 @@ class Sidebar extends Component
     public function render(): View|Closure|string
     {   
         
-    $documents = Document::where('barangay_id' , request(['barangay']))->get();
+    $documents = Document::where('barangay_id' , $this->barangay)->get();
         
         return view('components.city.documents.sidebar', [
             'documents' => $documents,
