@@ -18,11 +18,6 @@
                     {{-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('history')">
                         {{ __('History') }}
                     </x-nav-link> --}}
-                    @cho
-                        <x-nav-link :href="route('templates')" :active="request()->routeIs('templates')">
-                            {{ __('Templates') }}
-                        </x-nav-link>
-                    @endcho
                 </div>
             </div>
 

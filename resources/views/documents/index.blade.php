@@ -22,12 +22,12 @@
                 @endcho --}}
                 @foreach ($templates as $template)
                     @cho
-                        <a href="/template/{{ $template->slug }}?barangay={{ $barangay->id }}" class="h-32 bg-slate-900 shadow-lg rounded-xl flex flex-col justify-center">
+                        <a href="{{ route('ShowDocument', ['template' => $template->slug]) }}?barangay={{ $barangay->id }}" class="h-32 bg-slate-900 shadow-lg rounded-xl flex flex-col justify-center">
                             <div class="text-center">{{ $template->name }}</div>
                         </a>
                     @endcho
                     @bhw
-                        <a href="/template/{{ $template->slug }}" class="h-32 bg-slate-900 shadow-lg rounded-xl flex flex-col justify-center">
+                        <a href="{{ route('ShowDocument', ['template' => $template->slug]) }}" class="h-32 bg-slate-900 shadow-lg rounded-xl flex flex-col justify-center">
                             <div class="text-center">{{ $template->name }}</div>
                         </a>
                     @endbhw

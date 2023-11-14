@@ -10,10 +10,10 @@
                                 </x-icon>
                             </span>
                             @cho
-                                <a class="text-lg" href="/template/{{ $template->slug }}?barangay={{ $barangay }}">{{ $template->name }}</a>
+                                <a class="text-lg" href="{{ route('ShowDocument', ['template' => $template->slug]) }}?barangay={{ $barangay }}">{{ $template->name }}</a>
                             @endcho
                             @bhw
-                                <a class="text-lg" href="/template/{{ $template->slug }}">{{ $template->name }}</a>
+                                <a class="text-lg" href="{{ route('ShowDocument', ['template' => $template->slug]) }}">{{ $template->name }}</a>
                             @endbhw
                         </div>
                         <div x-show="open" x-collapse>

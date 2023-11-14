@@ -69,7 +69,7 @@ Route::middleware('auth')->group(function () {
         Route::post('templates', [DocumentTemplateController::class, 'store']);
         Route::get('templates/create', [DocumentTemplateController::class, 'create']);
     });
-    Route::get('/template/{template:slug}', [DocumentDateController::class, 'index']);
+    Route::get('/document/{template:slug}', [DocumentDateController::class, 'index'])->name('ShowDocument');
 
     // Route::get('/{barangay:slug}', [DocumentController::class, 'index']);
 
