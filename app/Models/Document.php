@@ -20,15 +20,18 @@ class Document extends Model
     //     );
     // }
 
-    public function barangay(){
+    public function barangay()
+    {
         return $this->belongsTo(Barangay::class);
     }
 
-    public function template(){
-        return $this->belongsTo(DocumentTemplate::class, "document_template_id");
+    public function template()
+    {
+        return $this->belongsTo(DocumentTemplate::class, 'document_template_id');
     }
 
-    public function dates(){
+    public function dates()
+    {
         return $this->hasMany(DocumentDate::class);
     }
 }

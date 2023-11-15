@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\BarangayHealthWorker;
 use App\Models\CityHealthWorker;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
@@ -41,13 +40,13 @@ class RegisteredUserController extends Controller
                 function (string $attribute, mixed $value, Closure $fail) use ($request) {
                     if ($request->user_type == 'CHO') {
                         if ($value !== env('CHO_KEY')) {
-                            $fail("Invalid CHO Key");
+                            $fail('Invalid CHO Key');
                         }
                     }
-                }
+                },
             ],
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'contact' => ['required', 'digits:11', 'numeric', 'starts_with:09'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
@@ -63,12 +62,12 @@ class RegisteredUserController extends Controller
         if ($request->user_type === 'CHO') {
             CityHealthWorker::create([
                 'user_id' => $user->id,
-                'admin' => 0
+                'admin' => 0,
             ]);
-        } else if ($request->user_type === 'BHW') {
+        } elseif ($request->user_type === 'BHW') {
             BarangayHealthWorker::create([
                 'user_id' => $user->id,
-                'barangay_id' => $request->barangay
+                'barangay_id' => $request->barangay,
             ]);
         }
 

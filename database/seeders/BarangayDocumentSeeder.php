@@ -8,7 +8,6 @@ use App\Models\Document;
 use App\Models\DocumentDate;
 use App\Models\DocumentTemplate;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -37,23 +36,22 @@ class BarangayDocumentSeeder extends Seeder
                 'user_type' => 'BHW',
             ]))
             ->create([
-                'barangay_id' => $barangay->id
+                'barangay_id' => $barangay->id,
             ]);
 
-        for($i = 0; $i < 20; $i++)
-        {
+        for ($i = 0; $i < 20; $i++) {
             DocumentDate::factory()
-            ->for(
-                Document::factory()
-                    ->for(DocumentTemplate::factory()->create(), 'template')
-                    ->create([
-                        'barangay_id' =>  $barangay->id,
-                    ]),
-                'document'
-            )
-            ->create([
-                'user_id'=> $bhw->id,
-            ]);
+                ->for(
+                    Document::factory()
+                        ->for(DocumentTemplate::factory()->create(), 'template')
+                        ->create([
+                            'barangay_id' => $barangay->id,
+                        ]),
+                    'document'
+                )
+                ->create([
+                    'user_id' => $bhw->id,
+                ]);
         }
     }
 }

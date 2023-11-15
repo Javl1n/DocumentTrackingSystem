@@ -2,8 +2,6 @@
 
 namespace App\View\Components\Documents;
 
-use App\Models\Barangay;
-use App\Models\BarangayHealthWorker;
 use App\Models\Document;
 use App\Models\DocumentDate;
 use App\Models\DocumentTemplate;
@@ -20,9 +18,8 @@ class Sidebar extends Component
      */
     public function __construct(
         public string $barangay,
-    )
-    {
-        $this->documents = Document::where('barangay_id' , $barangay)->get();
+    ) {
+        $this->documents = Document::where('barangay_id', $barangay)->get();
     }
 
     /**

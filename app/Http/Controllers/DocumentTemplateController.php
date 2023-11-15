@@ -10,14 +10,16 @@ class DocumentTemplateController extends Controller
 {
     public function index()
     {
-        return view("cho.templates.index", [
-            "templates" => DocumentTemplate::latest()->paginate(10),
+        return view('cho.templates.index', [
+            'templates' => DocumentTemplate::latest()->paginate(10),
         ]);
     }
+
     public function create()
     {
-        return view("cho.templates.create");
+        return view('cho.templates.create');
     }
+
     public function store(Request $request)
     {
         $request->validate([

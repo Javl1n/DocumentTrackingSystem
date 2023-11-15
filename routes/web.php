@@ -20,50 +20,41 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-
-
-
-
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth', 'verified'])->name('dashboard');
-
 
 // Route::middleware(['role:CHO', 'auth'])->group(function () {
 //     Route::get('templates', [DocumentTemplateController::class, 'index'])->name('templates');
 //     Route::get('templates/create', [DocumentTemplateController::class, 'create']);
 // });
 
-
-
-
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
-        if(Gate::allows('cho')) {
+        if (Gate::allows('cho')) {
             return redirect('/cho');
         } else {
             $barangay = BarangayHealthWorker::where('user_id', auth()->user()->id)->first()->barangay;
+
             return redirect("/bhw/$barangay->slug");
         }
 
     })->name('Home');
 
     Route::group([
-        'prefix'=> 'bhw',
-        'can' => 'bhw'
+        'prefix' => 'bhw',
+        'can' => 'bhw',
     ], function () {
         Route::get('/{barangay:slug}', [DocumentController::class, 'index']);
         Route::get('documents/create/{template:slug}', [DocumentController::class, 'create']);
         Route::post('documents', [DocumentController::class, 'store']);
     });
 
-    
     Route::group([
-        'prefix'=> 'cho',
+        'prefix' => 'cho',
         'can' => 'cho',
     ], function () {
-        Route::get('/', [BarangayDocumentController::class,'index']);
+        Route::get('/', [BarangayDocumentController::class, 'index']);
         Route::get('/{barangay:slug}', [DocumentController::class, 'index']);
         Route::get('templates', [DocumentTemplateController::class, 'index'])->name('templates');
         Route::post('templates', [DocumentTemplateController::class, 'store']);
@@ -78,4 +69,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
