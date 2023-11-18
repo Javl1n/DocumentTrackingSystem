@@ -4,11 +4,11 @@
             @foreach($templates as $template)
                 <li class="p-2">
                     <div x-data="{open: false}">
-                        <div class="flex">
-                            <a class="text-lg flex-1" href="{{ route('ShowDocument', ['template' => $template->slug]) }}@cho?barangay={{ $barangay }}@endcho">
+                        <div class="flex group">
+                            <a class="text-lg flex-1 pb-1 ps-1 group-hover:text-blue-400 {{ request()->is("document/$template->slug") ? 'underline decoration-blue-400 underline-offset-8' : '' }}" href="/document/{{ $template->slug }}@cho?barangay={{ $barangay }}@endcho">
                                 {{ $template->name }}
                             </a>
-                            <span @click ="open =! open">
+                            <span @click ="open =! open" class="group-hover:text-blue-400">
                                 <x-icon name="dropdown-arrow" class="w-4 mt-1 me-2 -rotate-90" x-bind:class="open ? 'rotate-0' : ''" />
                             </span>
                         </div>   

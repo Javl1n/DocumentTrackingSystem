@@ -4,7 +4,7 @@
     </x-slot>
     <x-slot name="header">
         <div class="flex justify-between">
-            {{ __('Templates') }}
+            {{ __('Documents') }}
             @cho
                 <a href="templates/create" class="font-thin text-sm border rounded p-2 m-0">Add New</a>
             @endcho
@@ -21,17 +21,9 @@
                     </a>
                 @endcho --}}
                 @foreach ($templates as $template)
-                    @cho
-                        <a href="{{ route('ShowDocument', ['template' => $template->slug]) }}?barangay={{ $barangay->id }}" class="h-32 bg-slate-900 shadow-lg rounded-xl flex flex-col justify-center">
-                            <div class="text-center">{{ $template->name }}</div>
-                        </a>
-                    @endcho
-                    @bhw
-                        <a href="{{ route('ShowDocument', ['template' => $template->slug]) }}" class="h-32 bg-slate-900 shadow-lg rounded-xl flex flex-col justify-center">
-                            <div class="text-center">{{ $template->name }}</div>
-                        </a>
-                    @endbhw
-
+                    <a href="/document/{{ $template->slug }}@cho?barangay={{ $barangay->id }}@endcho" class="h-32 bg-slate-900 shadow-lg rounded-xl flex flex-col justify-center">
+                        <div class="text-center">{{ $template->name }}</div>
+                    </a>
                 @endforeach
             </div>
             <div class="mt-4">

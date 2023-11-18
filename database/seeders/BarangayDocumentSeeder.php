@@ -39,7 +39,7 @@ class BarangayDocumentSeeder extends Seeder
                 'barangay_id' => $barangay->id,
             ]);
 
-        for ($i = 0; $i < 20; $i++) {
+        for ($i = 0; $i < 90; $i++) {
             DocumentDate::factory()
                 ->for(
                     Document::factory()

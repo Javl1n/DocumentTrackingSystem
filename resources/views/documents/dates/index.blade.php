@@ -3,7 +3,7 @@
         <x-documents.sidebar :barangay="$barangay" />
     </x-slot>
     <x-slot name="header">
-        <span class="font-light text-gray-500">Documents/</span>{{ $template->name }}
+        <span class="font-light text-gray-500"><a href="{{ url()->previous() }}">Documents</a> / </span>{{ $template->name }}
     </x-slot>
     <x-panel>
         <div class="grid grid-cols-10 gap-y-5">

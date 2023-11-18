@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
         'prefix' => 'bhw',
         'can' => 'bhw',
     ], function () {
-        Route::get('/{barangay:slug}', [DocumentController::class, 'index']);
+        Route::get('/{barangay:slug}', [DocumentController::class, 'index'])->name('documents');
         Route::get('documents/create/{template:slug}', [DocumentController::class, 'create']);
         Route::post('documents', [DocumentController::class, 'store']);
     });
@@ -54,13 +54,13 @@ Route::middleware('auth')->group(function () {
         'prefix' => 'cho',
         'can' => 'cho',
     ], function () {
-        Route::get('/', [BarangayDocumentController::class, 'index']);
-        Route::get('/{barangay:slug}', [DocumentController::class, 'index']);
+        Route::get('/', [BarangayDocumentController::class, 'index'])->name('documents');
+        Route::get('/{barangay:slug}', [DocumentController::class, 'index'])->name('documents');
         Route::get('templates', [DocumentTemplateController::class, 'index'])->name('templates');
         Route::post('templates', [DocumentTemplateController::class, 'store']);
         Route::get('templates/create', [DocumentTemplateController::class, 'create']);
     });
-    Route::get('/document/{template:slug}', [DocumentDateController::class, 'index'])->name('ShowDocument');
+    Route::get('/document/{template:slug}', [DocumentDateController::class, 'index'])->name('documents');
 
     // Route::get('/{barangay:slug}', [DocumentController::class, 'index']);
 
