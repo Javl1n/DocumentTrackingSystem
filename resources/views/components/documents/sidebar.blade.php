@@ -5,17 +5,13 @@
                 <li class="p-2">
                     <div x-data="{open: false}">
                         <div class="flex">
+                            <a class="text-lg flex-1" href="{{ route('ShowDocument', ['template' => $template->slug]) }}@cho?barangay={{ $barangay }}@endcho">
+                                {{ $template->name }}
+                            </a>
                             <span @click ="open =! open">
-                                <x-icon name="dropdown-arrow" class="w-4 mt-1 me-2 -rotate-90" x-bind:class="open ? 'rotate-0' : ''">
-                                </x-icon>
+                                <x-icon name="dropdown-arrow" class="w-4 mt-1 me-2 -rotate-90" x-bind:class="open ? 'rotate-0' : ''" />
                             </span>
-                            @cho
-                                <a class="text-lg" href="{{ route('ShowDocument', ['template' => $template->slug]) }}?barangay={{ $barangay }}">{{ $template->name }}</a>
-                            @endcho
-                            @bhw
-                                <a class="text-lg" href="{{ route('ShowDocument', ['template' => $template->slug]) }}">{{ $template->name }}</a>
-                            @endbhw
-                        </div>
+                        </div>   
                         <div x-show="open" x-collapse>
                             <ul class="ms-5 mt-4">
                                 @php
