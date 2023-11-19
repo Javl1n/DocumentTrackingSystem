@@ -14,9 +14,10 @@ return new class extends Migration
         Schema::create('document_templates', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
+            $table->string('description');
             $table->integer('update_cycle');
             $table->string('slug')->unique();
-            // $table->string('file');
+            $table->string('link');
             $table->timestamps();
         });
     }

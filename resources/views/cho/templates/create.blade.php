@@ -10,7 +10,7 @@
             @csrf
             <x-form.text-input-group name="title" type="text" />
             <x-form.text-input-group name="cycle" type="number" label="Update Cycle" />
-            {{-- <x-form.text-input-group name="cycle" type="file" label="Update Cycle" /> --}}
+            <x-form.text-input-group name="link" type="file" label="File" />
             <div class="flex justify-end">
                 <x-primary-button class="mt-10">
                     {{ __('Submit') }}

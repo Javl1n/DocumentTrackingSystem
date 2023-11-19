@@ -3,14 +3,13 @@
     <x-slot name="header">
         <div class="flex justify-between">
             {{ __('Templates') }}
-            <a href="templates/create" class="font-thin text-sm border rounded p-2 m-0">Add New</a>
+            <a href="templates/create" class="font-thin text-sm border rounded p-2 m-0 hover:bg-blue-500">Add New</a>
         </div>
     </x-slot>
     <x-panel>
-        <div class="grid grid-cols-5 gap-4">
+        <div class="grid grid-cols-2 gap-4">
             @foreach ($templates as $template)
-                <div class="border p-4 text-center">
-                    <x-icon name="spreadsheet" class="fill-white" />
+                <div class="rounded-xl bg-slate-900 ps-5 py-4 text-xl font-bold">    
                     {{ $template->name }}
                 </div>
             @endforeach

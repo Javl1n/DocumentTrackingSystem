@@ -39,19 +39,19 @@ class BarangayDocumentSeeder extends Seeder
                 'barangay_id' => $barangay->id,
             ]);
 
-        for ($i = 0; $i < 90; $i++) {
-            DocumentDate::factory()
-                ->for(
-                    Document::factory()
-                        ->for(DocumentTemplate::factory()->create(), 'template')
-                        ->create([
-                            'barangay_id' => $barangay->id,
-                        ]),
-                    'document'
-                )
-                ->create([
-                    'user_id' => $bhw->id,
-                ]);
-        }
+        // for ($i = 0; $i < 90; $i++) {
+        //     DocumentDate::factory()
+        //         ->for(
+        //             Document::factory()
+        //                 ->for(DocumentTemplate::factory()->create(), 'template')
+        //                 ->create([
+        //                     'barangay_id' => $barangay->id,
+        //                 ]),
+        //             'document'
+        //         )
+        //         ->create([
+        //             'user_id' => $bhw->id,
+        //         ]);
+        // }
     }
 }

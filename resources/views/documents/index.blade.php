@@ -5,9 +5,9 @@
     <x-slot name="header">
         <div class="flex justify-between">
             {{ __('Documents') }}
-            @cho
+            {{-- @cho
                 <a href="templates/create" class="font-thin text-sm border rounded p-2 m-0">Add New</a>
-            @endcho
+            @endcho --}}
         </div>
     </x-slot>
     <x-panel>

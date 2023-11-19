@@ -25,12 +25,14 @@ class DocumentTemplateController extends Controller
         $request->validate([
             'title' => 'required',
             'cycle' => 'required|numeric|gt:0',
+            'link' => 'required|mimes:xls,xlm,xla,xlsx'
         ]);
 
         DocumentTemplate::create([
             'name' => $request->title,
             'update_cycle' => $request->cycle,
             'slug' => Str::slug($request->title, '-'),
+            'link' => $request->file('link')->store('templates'),
         ]);
 
         return redirect('/');
