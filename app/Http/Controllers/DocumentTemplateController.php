@@ -15,6 +15,13 @@ class DocumentTemplateController extends Controller
         ]);
     }
 
+    public function show(DocumentTemplate $template){
+        return view('templates.show', [
+            'template' => $template,
+            'templates' => DocumentTemplate::latest()->get(),
+        ]);
+    }
+
     public function create()
     {
         return view('cho.templates.create');
@@ -25,11 +32,13 @@ class DocumentTemplateController extends Controller
         $request->validate([
             'title' => 'required',
             'cycle' => 'required|numeric|gt:0',
-            'link' => 'required|mimes:xls,xlm,xla,xlsx'
+            'link' => 'required|mimes:xls,xlm,xla,xlsx',
+            'description' => 'required|min:15',
         ]);
 
         DocumentTemplate::create([
             'name' => $request->title,
+            'description' => $request->description,
             'update_cycle' => $request->cycle,
             'slug' => Str::slug($request->title, '-'),
             'link' => $request->file('link')->store('templates'),

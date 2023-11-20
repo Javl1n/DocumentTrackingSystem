@@ -17,6 +17,7 @@
                     name="description" 
                     id="description" 
                     class="w-full h-full mt-1 bg-gray-900 resize-none border-slate-700 rounded-lg"
+                    placeholder="Tell us more about this template..."
                 ></textarea>                
                 <x-input-error :messages="$errors->get('description')" class="mt-2" />
             </div>

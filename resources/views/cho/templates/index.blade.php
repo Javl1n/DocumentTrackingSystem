@@ -9,9 +9,9 @@
     <x-panel>
         <div class="grid grid-cols-2 gap-4">
             @foreach ($templates as $template)
-                <div class="rounded-xl bg-slate-900 ps-5 py-4 text-xl font-bold">    
+                <a href="/template/{{ $template->slug }}" class="rounded-xl bg-slate-900 ps-5 py-4 text-xl font-bold">    
                     {{ $template->name }}
-                </div>
+                </a>
             @endforeach
         </div>
     </x-panel>

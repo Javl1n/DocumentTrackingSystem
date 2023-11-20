@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('document_templates', function (Blueprint $table) {
             $table->id();
             $table->string('name')->unique();
-            $table->string('description');
+            $table->text('description');
             $table->integer('update_cycle');
             $table->string('slug')->unique();
             $table->string('link');

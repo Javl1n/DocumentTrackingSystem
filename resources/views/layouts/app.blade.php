@@ -21,7 +21,11 @@
             @include('layouts._navigation')
             <div class="flex flex-grow h-full">
                 @if($sidebar)
-                    {{ $sidebar }}
+                <aside class="w-1/4 p-7 border-r border-gray-600  text-white">
+                    <div class=" h-[87vh] overflow-y-auto">
+                        {{ $sidebar }}
+                    </div>
+                </aside>                
                 @endif
 
                 <!-- Page Content -->
