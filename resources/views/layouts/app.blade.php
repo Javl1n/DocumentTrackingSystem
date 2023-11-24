@@ -17,8 +17,9 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased bg-gray-100 dark:bg-gray-900">
-        <div class="min-h-screen flex flex-col">
-            @include('layouts._navigation')
+        <div class="min-h-screen flex">
+            {{-- @include('layouts._navigation') --}}
+            @include('layouts._new_navigation')
             <div class="flex flex-grow h-full">
                 @if($sidebar)
                 <aside class="w-1/4 p-7 border-r border-gray-600  text-white">
