@@ -1,9 +1,9 @@
 <x-app-layout :sidebar="true">
     <x-slot name="sidebar">
         <ul class="mt-2 text-lg">
-            @foreach($templates as $template)
+            @foreach($templates as $templatebar)
                 <li class="p-2">
-                    <a href="">{{ $template->name }}</a>
+                    <a href="{{ route('templates.show', ['template' => $templatebar->slug]) }}">{{ $templatebar->name }}</a>
                 </li>
             @endforeach
         </ul>

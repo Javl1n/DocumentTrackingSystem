@@ -55,13 +55,13 @@ Route::middleware('auth')->group(function () {
         'prefix' => 'cho',
         'can' => 'cho',
     ], function () {
-        Route::get('templates', [DocumentTemplateController::class, 'index'])->name('templates.index');
         Route::get('/', [BarangayDocumentController::class, 'index'])->name('documents.barangay');
         Route::get('/{barangay:slug}', [DocumentController::class, 'index'])->name('documents.index');
         Route::post('templates', [DocumentTemplateController::class, 'store'])->name('templates.store');
         Route::get('templates/create', [DocumentTemplateController::class, 'create'])->name('templates.create');
     });
     
+    Route::get('templates', [DocumentTemplateController::class, 'index'])->name('templates.index');
     Route::get('/document/{template:slug}', [DocumentDateController::class, 'index'])->name('documents.show');
     Route::get('/template/{template:slug}', [DocumentTemplateController::class, 'show'])->name('templates.show');
 

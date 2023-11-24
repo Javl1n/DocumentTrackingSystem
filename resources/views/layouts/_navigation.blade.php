@@ -15,11 +15,9 @@
                     <x-nav-link :href="route('Home')" :active="request()->routeIs('documents.*')">
                         {{ __('Documents') }}
                     </x-nav-link>
-                    @cho
                     <x-nav-link :href="route('templates.index')" :active="request()->routeIs('templates.*')">
                         {{ __('Templates') }}
                     </x-nav-link>
-                    @endcho
                     {{-- <x-nav-link :href="route('dashboard')" :active="request()->routeIs('history')">
                         {{ __('History') }}
                     </x-nav-link> --}}

@@ -10,7 +10,7 @@ class DocumentTemplateController extends Controller
 {
     public function index()
     {
-        return view('cho.templates.index', [
+        return view('templates.index', [
             'templates' => DocumentTemplate::latest()->paginate(10),
         ]);
     }
