@@ -29,7 +29,6 @@ class Sidebar extends Component
     {
         return view('components.documents.sidebar', [
             'documents' => $this->documents,
-            'documentDates' => DocumentDate::all(),
             'templates' => DocumentTemplate::latest()->get(),
         ]);
     }

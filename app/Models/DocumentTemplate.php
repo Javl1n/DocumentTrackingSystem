@@ -7,7 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class DocumentTemplate extends Model
 {
-    use HasFactory;
+    use HasFactory, Search;
+
+    protected $searchable = [
+        'name'
+    ];
 
     public function documents()
     {
