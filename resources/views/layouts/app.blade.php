@@ -16,25 +16,25 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased bg-gray-100 dark:bg-gray-900">
+    <body class="font-sans antialiased bg-gray-100 dark:bg-background dark:text-text">
         <div class="min-h-screen flex">
             {{-- @include('layouts._navigation') --}}
             @include('layouts._new_navigation')
             <div class="flex flex-grow h-full">
                 @if($sidebar)
-                <aside class="w-1/4 p-7 border-r border-gray-600  text-white">
-                    <div class=" h-[87vh] overflow-y-auto">
+                <aside class="w-1/4 p-7 border-gray-600  text-text bg-[#121518]">
+                    <div class="h-[94vh] overflow-y-auto">
                         {{ $sidebar }}
                     </div>
                 </aside>                
                 @endif
 
                 <!-- Page Content -->
-                <main class="flex-1 flex flex-col">
+                <main class="flex-1 flex flex-col h-screen">
                     @if (isset($header))
                         <header class="shadow">
                             <div class="py-6 px-4 sm:px-6 lg:px-8">
-                                <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                                <h2 class="font-semibold text-2xl text-gray-800 dark:text-text leading-tight">
                                     {{ $header }}
                                 </h2>
                             </div>

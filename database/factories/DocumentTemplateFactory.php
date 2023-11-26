@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\DocumentTemplate>
@@ -19,7 +20,9 @@ class DocumentTemplateFactory extends Factory
         return [
             'name' => fake()->unique()->catchPhrase(),
             'update_cycle' => fake()->numberBetween(1, 12),
-            'slug' => fake()->unique()->slug(),
+            'slug' => $slug = fake()->unique()->slug(),
+            'link' => Storage::copy('seederTemplate.xlsx', 'templates/' . $slug . '.xlsx'),
+            'description' => fake()->text(),
         ];
     }
 }

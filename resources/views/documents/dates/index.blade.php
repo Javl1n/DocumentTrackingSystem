@@ -1,11 +1,10 @@
 <x-app-layout :sidebar="true">
     <x-slot name="sidebar">
-        <x-documents.sidebar :barangay="$barangay" />
+        <x-documents.sidebar :barangay="$barangay->id" />
     </x-slot>
     <x-slot name="header">
-        <span class="font-light text-gray-500"><a href="{{ url()->previous() }}">Documents</a> / </span>{{ $template->name }}
+        <span class="font-light text-gray-500"><a href="{{ url()->previous() }}">{{ $barangay->name }}</a> / </span>{{ $template->name }}
     </x-slot>
-    <x-panel>
         <div class="grid grid-cols-10 gap-y-5">
             <div class="col-span-7 font-bold text-center">Month</div>
             <div class="col-span-2 font-bold">Published By</div>
@@ -23,5 +22,4 @@
                 <div class="absolute bottom-16 right-16 bg-blue-500 p-5 rounded-full z-10">Add New</div>
             </a>
         @endbhw
-    </x-panel>
 </x-app-layout>

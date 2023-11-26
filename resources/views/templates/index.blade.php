@@ -3,11 +3,13 @@
     <x-slot name="header">
         <div class="flex justify-between">
             {{ __('Templates') }}
-            <a 
-                href="{{ route('templates.create') }}" 
-                class="font-thin text-sm border rounded p-2 m-0 hover:bg-blue-500">
-                    Add New
-            </a>
+            @cho
+                <a 
+                    href="{{ route('templates.create') }}" 
+                    class="font-thin text-sm border rounded p-2 m-0 hover:bg-blue-500">
+                        Add New
+                </a>
+            @endcho
         </div>
     </x-slot>
     <x-panel>

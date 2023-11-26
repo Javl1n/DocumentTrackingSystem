@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BarangayHealthWorker;
+use App\Models\Barangay;
 use App\Models\Document;
 use App\Models\DocumentDate;
 use App\Models\DocumentTemplate;
@@ -30,7 +31,7 @@ class DocumentDateController extends Controller
         return view('documents.dates.index', [
             'template' => $template,
             'documents' => $documentDates,
-            'barangay' => $barangay,
+            'barangay' => Barangay::where('id' , $barangay)->first(),
         ]);
     }
 }

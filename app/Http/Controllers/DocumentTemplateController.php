@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Barangay;
+use App\Models\Document;
 use App\Models\DocumentTemplate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -28,7 +30,9 @@ class DocumentTemplateController extends Controller
     }
 
     public function store(Request $request)
-    {
+    {   
+        // ddd($request->link);
+
         $request->validate([
             'title' => 'required',
             'cycle' => 'required|numeric|gt:0',
@@ -36,13 +40,28 @@ class DocumentTemplateController extends Controller
             'description' => 'required|min:15',
         ]);
 
-        DocumentTemplate::create([
+        $template = DocumentTemplate::create([
             'name' => $request->title,
             'description' => $request->description,
             'update_cycle' => $request->cycle,
-            'slug' => Str::slug($request->title, '-'),
-            'link' => $request->file('link')->store('templates'),
+            'slug' => $slug = Str::slug($request->title, '-'),
+            'link' => $request->file('link')->storeAs('templates', $slug . '.' . $request->link->getClientOriginalExtension()),
         ]);
+
+        $barangays = Barangay::get();
+
+        foreach($barangays as $barangay) {
+            Document::create([
+                'document_template_id' => $template->id,
+                'barangay_id'=> $barangay->id,
+            ]);
+        }
+
+        // foreach($barangays as $barangay){
+        //     Document::create([
+        //         'name' => 
+        //     ])
+        // }
 
         return redirect('/');
     }

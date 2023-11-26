@@ -32,6 +32,5 @@ class Sidebar extends Component
             'documentDates' => DocumentDate::all(),
             'templates' => DocumentTemplate::latest()->get(),
         ]);
-        // return view('components.documents.sidebar');
     }
 }

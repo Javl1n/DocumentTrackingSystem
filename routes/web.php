@@ -53,12 +53,11 @@ Route::middleware('auth')->group(function () {
 
     Route::group([
         'prefix' => 'cho',
-        'can' => 'cho',
     ], function () {
-        Route::get('/', [BarangayDocumentController::class, 'index'])->name('documents.barangay');
-        Route::get('/{barangay:slug}', [DocumentController::class, 'index'])->name('documents.index');
-        Route::post('templates', [DocumentTemplateController::class, 'store'])->name('templates.store');
-        Route::get('templates/create', [DocumentTemplateController::class, 'create'])->name('templates.create');
+        Route::get('/', [BarangayDocumentController::class, 'index'])->name('documents.barangay')->can('cho');
+        Route::get('/{barangay:slug}', [DocumentController::class, 'index'])->name('documents.index')->can('cho');
+        Route::post('templates', [DocumentTemplateController::class, 'store'])->name('templates.store')->can('cho');
+        Route::get('templates/create', [DocumentTemplateController::class, 'create'])->name('templates.create')->can('cho');
     });
     
     Route::get('templates', [DocumentTemplateController::class, 'index'])->name('templates.index');

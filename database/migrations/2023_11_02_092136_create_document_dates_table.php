@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('document_id');
             $table->foreignId('user_id');
-            $table->date('date');
-            $table->string('link');
+            // $table->date('date');
+            // $table->string('link');
             $table->timestamps();
         });
     }

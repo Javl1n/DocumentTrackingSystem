@@ -10,6 +10,8 @@ use App\Models\DocumentTemplate;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
 
 class BarangayDocumentSeeder extends Seeder
 {
@@ -38,20 +40,23 @@ class BarangayDocumentSeeder extends Seeder
             ->create([
                 'barangay_id' => $barangay->id,
             ]);
+        
 
-        // for ($i = 0; $i < 90; $i++) {
-        //     DocumentDate::factory()
-        //         ->for(
-        //             Document::factory()
-        //                 ->for(DocumentTemplate::factory()->create(), 'template')
-        //                 ->create([
-        //                     'barangay_id' => $barangay->id,
-        //                 ]),
-        //             'document'
-        //         )
-        //         ->create([
-        //             'user_id' => $bhw->id,
-        //         ]);
-        // }
+        Storage::deleteDirectory('templates');
+
+        for ($i = 0; $i < 50; $i++) {
+            DocumentDate::factory()
+                ->for(
+                    Document::factory()
+                        ->for(DocumentTemplate::factory()->create(), 'template')
+                        ->create([
+                            'barangay_id' => $barangay->id,
+                        ]),
+                    'document'
+                )
+                ->create([
+                    'user_id' => $bhw->id,
+                ]);
+        }
     }
 }

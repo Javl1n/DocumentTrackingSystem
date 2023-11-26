@@ -3,7 +3,7 @@
         <li class="p-2">
             <div x-data="{open: false}">
                 <div class="flex group">
-                    <a class="text-lg flex-1 pb-1 ps-1 group-hover:text-blue-400 {{ request()->is("document/$template->slug") ? 'underline decoration-blue-400 underline-offset-8' : '' }}" href="/document/{{ $template->slug }}@cho?barangay={{ $barangay }}@endcho">
+                    <a class="flex-1 pb-1 ps-1 group-hover:text-blue-400 {{ request()->is("document/$template->slug") ? 'underline decoration-blue-400 underline-offset-8' : '' }}" href="/document/{{ $template->slug }}@cho?barangay={{ $barangay }}@endcho">
                         {{ $template->name }}
                     </a>
                     <span @click ="open =! open" class="group-hover:text-blue-400">

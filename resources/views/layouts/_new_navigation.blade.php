@@ -1,12 +1,28 @@
-<div class=" flex" x-data="{hover: false}" @mouseover="hover = true" @mouseover.away="hover = false">
-     <div class="dark:bg-background px-4">
-          <x-icon name="file" class="fill-text h-12 w-12 mt-4" />
-          <x-icon name="stack" class="fill-text h-12 w-12 mt-4" />
+<div class="flex" x-data="{hover: false}" @mouseover="hover = true" @mouseover.away="hover = false">
+     <div class="dark:bg-background">
+
+          <x-new-navigation.icon-link icon="file" :first="true" href="/" :active="request()->routeIs('documents.*')" />
+
+          <x-new-navigation.icon-link icon="stack" :href="route('templates.index')" :active="request()->routeIs('templates.*')" />
+
+          <x-new-navigation.icon-link icon="person" :href="route('profile.edit')" :active="request()->routeIs('profile.*')" />
      </div>
-     <div x-show="hover" x-transition.origin.left x-transition.duration.200ms>
-          <div class="dark:bg-background absolute px-4 h-full">
-               <x-icon name="file" class="fill-text h-12 w-12 mt-4" />
-               <x-icon name="stack" class="fill-text h-12 w-12 mt-4" />
+     <div x-show="hover"
+     x-transition.origin.left x-transition.duration.200ms
+     >
+          <div class="dark:bg-background absolute h-full w-80 pr-4">
+               <x-new-navigation.link icon="file" :first="true" href="/">Documents</x-new-navigation.link>
+
+               <x-new-navigation.link icon="stack" :href="route('templates.index')">Templates</x-new-navigation.link>
+
+               <x-new-navigation.link icon="person" :href="route('profile.edit')">Profile</x-new-navigation.link>
+               
+               <div class="text-red-500 h-12 text-xl flex flex-col justify-center bg-background">
+                    <form action="/logout" method="post">
+                         @csrf
+                         <button type="submit">Log Out</button>
+                    </form>
+               </div>
           </div>
      </div>
 </div>
