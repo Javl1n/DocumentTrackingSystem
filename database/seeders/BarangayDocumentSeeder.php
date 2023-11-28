@@ -22,12 +22,12 @@ class BarangayDocumentSeeder extends Seeder
     {
         $barangayName = 'Apopong';
 
-        $barangay = Barangay::factory()->create([
+        $barangayMain = Barangay::factory()->create([
             'name' => $barangayName,
             'slug' => Str::slug($barangayName, '-'),
         ]);
 
-        Barangay::factory(10)->create();
+        Barangay::factory(9)->create();
 
         BarangayHealthWorker::factory()
             ->for($bhw = User::factory()->create([
@@ -38,25 +38,36 @@ class BarangayDocumentSeeder extends Seeder
                 'user_type' => 'BHW',
             ]))
             ->create([
-                'barangay_id' => $barangay->id,
+                'barangay_id' => $barangayMain->id,
             ]);
         
 
         Storage::deleteDirectory('templates');
 
-        for ($i = 0; $i < 50; $i++) {
-            DocumentDate::factory()
-                ->for(
-                    Document::factory()
-                        ->for(DocumentTemplate::factory()->create(), 'template')
-                        ->create([
-                            'barangay_id' => $barangay->id,
-                        ]),
-                    'document'
-                )
-                ->create([
-                    'user_id' => $bhw->id,
+        DocumentTemplate::factory(50)->create();
+        
+        foreach (Barangay::all() as $barangay) {
+            foreach(DocumentTemplate::all() as $documentTemplate) {
+                Document::factory()->create([
+                    'barangay_id' => $barangay->id,
+                    'document_template_id'=> $documentTemplate->id,
                 ]);
+            }
         }
+
+        // for ($i = 0; $i < 50; $i++) {
+        //     DocumentDate::factory()
+        //         ->for(
+        //             Document::factory()
+        //                 ->for(DocumentTemplate::factory()->create(), 'template')
+        //                 ->create([
+        //                     'barangay_id' => $barangay->id,
+        //                 ]),
+        //             'document'
+        //         )
+        //         ->create([
+        //             'user_id' => $bhw->id,
+        //         ]);
+        // }
     }
 }

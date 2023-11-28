@@ -12,9 +12,12 @@
                 </div>   
                 <div x-show="open" x-collapse>
                     <ul class="ms-5 mt-4">
-                        @foreach ($documents->where('document_template_id', $template->id)->first()->dates as $document)
-                            <li>{{ date_format($document->created_at, "F d") }}</li>
-                        @endforeach
+                        @isset($documents->where('document_template_id', $template->id)->dates)
+                            @foreach ($documents->where('document_template_id', $template->id)->first()->dates as $document)
+                                <li>{{ date_format($document->created_at, "F d") }}</li>
+                            @endforeach
+                        @endisset
+                        
                         @bhw
                             <a href="/bhw/documents/create/{{ $template->slug }}" class="hover:text-blue-500">
                                 <li class="text-base flex">

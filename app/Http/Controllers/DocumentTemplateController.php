@@ -36,7 +36,7 @@ class DocumentTemplateController extends Controller
         $request->validate([
             'title' => 'required',
             'cycle' => 'required|numeric|gt:0',
-            'link' => 'required|mimes:xls,xlm,xla,xlsx',
+            'link' => 'required|mimes:xls,xlm,xla,xlsx,doc,docx',
             'description' => 'required|min:15',
         ]);
 

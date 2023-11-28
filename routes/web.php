@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
         } else {
             $barangay = BarangayHealthWorker::where('user_id', auth()->user()->id)->first()->barangay;
 
-            return redirect("/bhw/$barangay->slug");
+            return redirect(route('documents.index', $barangay));
         }
 
     })->name('Home');
@@ -46,8 +46,7 @@ Route::middleware('auth')->group(function () {
         'prefix' => 'bhw',
         'can' => 'bhw',
     ], function () {
-        Route::get('/{barangay:slug}', [DocumentController::class, 'index'])->name('documents.index');
-        Route::get('documents/create/{template:slug}', [DocumentController::class, 'create']);
+        Route::get('documents/create/{template:slug}', [DocumentController::class, 'create'])->name('documents.create');
         Route::post('documents', [DocumentController::class, 'store']);
     });
 
@@ -55,11 +54,11 @@ Route::middleware('auth')->group(function () {
         'prefix' => 'cho',
     ], function () {
         Route::get('/', [BarangayDocumentController::class, 'index'])->name('documents.barangay')->can('cho');
-        Route::get('/{barangay:slug}', [DocumentController::class, 'index'])->name('documents.index')->can('cho');
         Route::post('templates', [DocumentTemplateController::class, 'store'])->name('templates.store')->can('cho');
         Route::get('templates/create', [DocumentTemplateController::class, 'create'])->name('templates.create')->can('cho');
     });
     
+    Route::get('barangay/{barangay:slug}', [DocumentController::class, 'index'])->name('documents.index');
     Route::get('templates', [DocumentTemplateController::class, 'index'])->name('templates.index');
     Route::get('/document/{template:slug}', [DocumentDateController::class, 'index'])->name('documents.show');
     Route::get('/template/{template:slug}', [DocumentTemplateController::class, 'show'])->name('templates.show');

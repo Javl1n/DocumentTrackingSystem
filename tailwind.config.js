@@ -20,6 +20,7 @@ export default {
               'primary': '#83a8ec',
               'secondary': '#184fb4',
               'accent': '#b0c4e8',
+              'background-light': '#121518',
             },               
         },
     },

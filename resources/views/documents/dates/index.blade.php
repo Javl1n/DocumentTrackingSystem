@@ -3,7 +3,7 @@
         <x-documents.sidebar :barangay="$barangay->id" />
     </x-slot>
     <x-slot name="header">
-        <span class="font-light text-gray-500"><a href="{{ url()->previous() }}">{{ $barangay->name }}</a> / </span>{{ $template->name }}
+        <span class="font-light text-gray-500"><a href="{{ url()->previous }}">{{ $barangay->name }}</a> / </span>{{ $template->name }}
     </x-slot>
         <div class="grid grid-cols-10 gap-y-5">
             <div class="col-span-7 font-bold text-center">Month</div>

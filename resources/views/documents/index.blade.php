@@ -47,6 +47,7 @@
                             class="bg-secondary p-2 rounded">
                                 view all
                             </a>
+                            {{-- <form action="/document/{{ $document->template->slug }}?barangay={{ $barangay->id }}@endcho"><x-form.buttons.primary-button>View All</x-form.buttons.primary-button> </form>  --}}
                         </div>
                     </div>
                 @endforeach

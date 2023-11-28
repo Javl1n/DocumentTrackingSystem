@@ -4,11 +4,12 @@
         <div class="flex justify-between">
             {{ __('Templates') }}
             @cho
-                <a 
+                {{-- <a 
                     href="{{ route('templates.create') }}" 
                     class="font-thin text-sm border rounded p-2 m-0 hover:bg-blue-500">
                         Add New
-                </a>
+                </a> --}}
+                <x-form.buttons.primary-link href="{{ route('templates.create') }}">Add New</x-form.buttons.primary-link>
             @endcho
         </div>
     </x-slot>
