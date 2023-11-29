@@ -13,7 +13,7 @@ class DocumentTemplateController extends Controller
     public function index()
     {
         return view('templates.index', [
-            'templates' => DocumentTemplate::latest()->paginate(10),
+            'templates' => DocumentTemplate::latest()->get(),
         ]);
     }
 
@@ -45,7 +45,9 @@ class DocumentTemplateController extends Controller
             'description' => $request->description,
             'update_cycle' => $request->cycle,
             'slug' => $slug = Str::slug($request->title, '-'),
-            'link' => $request->file('link')->storeAs('templates', $slug . '.' . $request->link->getClientOriginalExtension()),
+            // 'link' => $request->file('link')->storeAs('templates', $slug . '.' . $request->link->getClientOriginalExtension()),
+        ])->file()->create([
+            'url' => $request->file('link')->storeAs('templates', $slug . '.' . $request->link->getClientOriginalExtension()),
         ]);
 
         $barangays = Barangay::get();

@@ -63,7 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/document/{template:slug}', [DocumentDateController::class, 'index'])->name('documents.show');
     Route::get('/template/{template:slug}', [DocumentTemplateController::class, 'show'])->name('templates.show');
 
-    Route::get('/download/{file:id}', [FileController::class, 'download'])->name('download');
+    Route::get('/download/{file}', [FileController::class, 'download'])->name('download');
 
     // Route::get('/{barangay:slug}', [DocumentController::class, 'index']);
 

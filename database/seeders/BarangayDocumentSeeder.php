@@ -51,7 +51,7 @@ class BarangayDocumentSeeder extends Seeder
             $url = 'templates/' . $template->slug . '.xlsx';
             Storage::copy('seederTemplate.xlsx', $url);
             $template->file()->create([
-                'url' => $url
+                'url' => $url,
             ]);
         }
 

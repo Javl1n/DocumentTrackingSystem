@@ -15,7 +15,7 @@
 
                <x-new-navigation.link icon="stack" :href="route('templates.index')">Templates</x-new-navigation.link>
 
-               <x-new-navigation.link icon="person" :href="route('profile.edit')">Profile</x-new-navigation.link>
+               <x-new-navigation.link icon="person" :href="route('profile.edit')">{{ Auth::user()->name }}</x-new-navigation.link>
                
                <div class="text-red-500 h-12 text-xl flex flex-col justify-center bg-background">
                     <form action="/logout" method="post">

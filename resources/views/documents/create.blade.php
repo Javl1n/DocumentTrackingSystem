@@ -9,12 +9,13 @@
         <form action="/bhw/documents" method="post" enctype="multipart/form-data">
             @csrf
             <x-text-input name="template" value="{{ $template->id }}" type="hidden" />
-            <h1><a href="">Download Template</a></h1>
-            <h2>Upload Document</h2>
-                <x-form.buttons.primary-button class="mt-10">
-                    {{ __('Submit') }}
-                </x-form.buttons.primary-button>
+            <div class="flex">
+                <div class="flex-1 me-4">
+                    <x-form.text-input-group name="link" type="file" label="File" />
+                </div>
+                <x-form.buttons.primary-link href="{{ route('download', $template->id) }}" class="h-23 mt-11 mb-1 dark:hover:bg-secondary dark:hover:text-text" >Download file</x-form.buttons.primary-link >
             </div>
+            <div inline-datepicker data-date="02/25/2022"></div>
         </form>
     </x-panel>
 </x-app-layout>
