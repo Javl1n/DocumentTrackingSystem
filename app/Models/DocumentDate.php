@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 class DocumentDate extends Model
 {
@@ -23,5 +24,10 @@ class DocumentDate extends Model
     public function publisher()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function file(): MorphOne
+    {
+        return $this->morphOne(File::class,'fileable');
     }
 }

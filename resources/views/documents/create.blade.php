@@ -9,11 +9,11 @@
         <form action="/bhw/documents" method="post" enctype="multipart/form-data">
             @csrf
             <x-text-input name="template" value="{{ $template->id }}" type="hidden" />
-            <h1>Download Template</h1>
+            <h1><a href="">Download Template</a></h1>
             <h2>Upload Document</h2>
-                <x-primary-button class="mt-10">
+                <x-form.buttons.primary-button class="mt-10">
                     {{ __('Submit') }}
-                </x-primary-button>
+                </x-form.buttons.primary-button>
             </div>
         </form>
     </x-panel>

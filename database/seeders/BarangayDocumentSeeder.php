@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Barangay;
 use App\Models\BarangayHealthWorker;
 use App\Models\Document;
+use App\Models\File;
 use App\Models\DocumentDate;
 use App\Models\DocumentTemplate;
 use App\Models\User;
@@ -44,17 +45,36 @@ class BarangayDocumentSeeder extends Seeder
 
         Storage::deleteDirectory('templates');
 
-        DocumentTemplate::factory(50)->create();
+        $templates = DocumentTemplate::factory(20)->create();
         
+        foreach ($templates as $template) {
+            $url = 'templates/' . $template->slug . '.xlsx';
+            Storage::copy('seederTemplate.xlsx', $url);
+            $template->file()->create([
+                'url' => $url
+            ]);
+        }
+
         foreach (Barangay::all() as $barangay) {
-            foreach(DocumentTemplate::all() as $documentTemplate) {
-                Document::factory()->create([
+            foreach($templates as $documentTemplate) {
+                $document = Document::factory()->create([
                     'barangay_id' => $barangay->id,
                     'document_template_id'=> $documentTemplate->id,
                 ]);
+                // DocumentDate::factory(2)->create([
+                //     'document_id' => $document->id,
+                //     'user_id' => $bhw->id,
+                // ]);
             }
         }
 
+
+        // foreach (Document::all() as $document) {
+        //     $document = DocumentDate::factory(2)->create([
+        //         'document_id' => $document->id,
+        //         'user_id' => $bhw->id,
+        //     ]);
+        // }
         // for ($i = 0; $i < 50; $i++) {
         //     DocumentDate::factory()
         //         ->for(

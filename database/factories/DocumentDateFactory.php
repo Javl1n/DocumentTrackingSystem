@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Document;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +19,9 @@ class DocumentDateFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'document_id' => Document::factory(),
+            'user_id' => User::factory(),
+            'date' => $this->faker->date(),
         ];
     }
 }

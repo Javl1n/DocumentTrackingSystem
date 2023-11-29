@@ -27,6 +27,8 @@ class DocumentDateController extends Controller
                                     ->first()?->id
                         )
                             ->get();
+        
+        // ddd($documentDates->first());
 
         return view('documents.dates.index', [
             'template' => $template,

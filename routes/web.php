@@ -4,7 +4,7 @@ use App\Http\Controllers\City\BarangayDocumentController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DocumentDateController;
 use App\Http\Controllers\DocumentTemplateController;
-use App\Http\Controllers\DownloadController;
+use App\Http\Controllers\FileController;
 use App\Http\Controllers\ProfileController;
 use App\Models\BarangayHealthWorker;
 use Illuminate\Support\Facades\Gate;
@@ -63,7 +63,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/document/{template:slug}', [DocumentDateController::class, 'index'])->name('documents.show');
     Route::get('/template/{template:slug}', [DocumentTemplateController::class, 'show'])->name('templates.show');
 
-    Route::get('/download', [DownloadController::class, 'download'])->name('download');
+    Route::get('/download/{file:id}', [FileController::class, 'download'])->name('download');
 
     // Route::get('/{barangay:slug}', [DocumentController::class, 'index']);
 

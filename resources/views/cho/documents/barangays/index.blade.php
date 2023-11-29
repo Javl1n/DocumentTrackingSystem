@@ -8,7 +8,7 @@
     <x-panel>
         <div class="grid grid-cols-5 gap-10">
             @foreach ($barangays as $barangay)
-                <a href="/{{ $barangay->slug }}">
+                <a href="{{ route('documents.index', ['barangay' => $barangay->slug]) }}">
                     <div class="text-center shadow-lg rounded-xl bg-slate-900 py-12 uppercase font-bold">{{ $barangay->name }}</div>
                 </a>
             @endforeach

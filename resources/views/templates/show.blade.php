@@ -22,7 +22,7 @@
             </div>
             <div>
                 <div class="text-lg font-bold">Download this file: 
-                    <a href="/download?type=template&link={{ $template->link }}" class="text-blue-200 hover:text-blue-400 ml-2">Download</a>
+                    <a href="{{ route('download', $template->file->id) }}" class="text-blue-200 hover:text-blue-400 ml-2">Download</a>
                 </div>
             </div>
         </div>
