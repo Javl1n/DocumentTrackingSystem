@@ -7,6 +7,7 @@ use App\Models\BarangayHealthWorker;
 use App\Models\Document;
 use App\Models\DocumentDate;
 use App\Models\DocumentTemplate;
+use App\Rules\SameFormat;
 use Illuminate\Http\Request;
 
 class DocumentController extends Controller
@@ -27,18 +28,24 @@ class DocumentController extends Controller
     }
 
     public function store(Request $request)
-    {
-        $user = BarangayHealthWorker::where('user_id', auth()->user()->id)->first();
-        $document = Document::firstOrCreate([
-            'document_template_id' => $request->template,
-            'barangay_id' => $user->barangay_id,
+    {   
+
+        $template = DocumentTemplate::where('id', $request->template)->first()->slug;
+
+        // ddd(pathinfo($request->link->getClientOriginalName(), PATHINFO_FILENAME) === $template);
+
+        $request->validate([
+            'link' => ['mimes:xls,xlm,xla,xlsx', new SameFormat($template)],
         ]);
+
+        $barangay = BarangayHealthWorker::where('user_id', auth()->user()->id)->first()->barangay;
+        $document = Document::where('barangay_id',  $barangay->id)->first();
+
         DocumentDate::create([
             'document_id' => $document->id,
             'user_id' => auth()->user()->id,
         ]);
 
-        $template = DocumentTemplate::where('id', $request->template)->first()->slug;
 
         return redirect("/template/$template")->with('success', 'Document Added Successfully');
     }
