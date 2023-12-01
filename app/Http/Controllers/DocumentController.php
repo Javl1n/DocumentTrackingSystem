@@ -34,8 +34,11 @@ class DocumentController extends Controller
 
         // ddd(pathinfo($request->link->getClientOriginalName(), PATHINFO_FILENAME) === $template);
 
+
         $request->validate([
-            'link' => ['mimes:xls,xlm,xla,xlsx', new SameFormat($template)],
+            'link' => ['mimes:xls,xlm,xla,xlsx,docx', new SameFormat($template)],
+            'year' => ['lte:' . date('Y'),],
+            'day'=> ['lte:31'],
         ]);
 
         $barangay = BarangayHealthWorker::where('user_id', auth()->user()->id)->first()->barangay;

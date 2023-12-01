@@ -9,22 +9,41 @@
         <form action="/bhw/documents" method="post" enctype="multipart/form-data">
             @csrf
             <x-text-input name="template" value="{{ $template->id }}" type="hidden" />
+
+            <x-input-label for="link" value="Link" />
             <div class="flex">
                 <div class="flex-1 me-4">
-                    <x-form.text-input-group name="link" type="file" label="File" />
+                    {{-- <x-form.text-input-group name="link" type="file" label="File" /> --}}
+                    <x-text-input 
+                        id="link" 
+                        class="block mt-1 w-full p-2" 
+                        type="file"
+                        name="link" 
+                        {{-- :value="old('link')"  --}}
+                        placeholder=""
+                        required 
+                        autofocus />
                 </div>
-                <x-form.buttons.primary-link href="{{ route('download', $template->id) }}" class="h-23 mt-11 mb-1 dark:hover:bg-secondary dark:hover:text-text" >Download Template</x-form.buttons.primary-link >
+                <x-form.buttons.primary-link href="{{ route('download', $template->id) }}" class="h-23 mt-2 mb-1 dark:hover:bg-secondary dark:hover:text-text" >Download Template</x-form.buttons.primary-link >
             </div>
+            <x-input-error :messages="$errors->get('link')" class="mt-2" />
+
             <div class="mt-4">
                 <x-input-label>Date</x-input-label>
                 <div class="grid grid-cols-3 gap-4 mt-2">
-                    <select name="month" id="month" class="bg-background rounded-md border-gray-700">
+                    <select name="month" id="month" class="bg-background rounded-md border-gray-700 h-11">
                         @for ($i = 1; $i <= 12; $i++)
                             <option>{{ DateTime::createFromFormat('!m', $i)->format('F') }}</option>
                         @endfor
                     </select>
-                    <x-text-input name="day" type="number" placeholder="Date" />
-                    <x-text-input name="year" type="text" placeholder="Year" />
+                    <div>    
+                        <x-text-input name="day" type="number" placeholder="Date" class="h-11 w-full" />
+                        <x-input-error :messages="$errors->get('day')" class="mt-2" />
+                    </div>
+                    <div>
+                        <x-text-input name="year" type="text" placeholder="Year" class="h-11 w-full" />
+                        <x-input-error :messages="$errors->get('year')" class="mt-2" />
+                    </div>
                 </div>
             </div>
             <div class="mt-4">
