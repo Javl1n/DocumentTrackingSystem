@@ -13,10 +13,14 @@
             @isset($documents)
                 @foreach ($documents as $document)
                     <div class="grid grid-cols-10 px-8 py-3">
-                        <div class="col-span-6">{{ date('F d, Y', strtotime($document->date)) }}</div>
+                        <div class="col-span-6">
+                            <a href="{{ route('documents.dates.show', ['barangay' => $barangay->slug, 'template' => $template->slug, 'date' => $document->date ]) }}">
+                                {{ date('F d, Y', strtotime($document->date)) }}
+                            </a>
+                        </div>
                         <div class="col-span-3">{{ $document->publisher->name }}</div>
                         <div class="col-span-1">
-                            <a href="{{ route('download', $template->file->id) }}?fileName={{ "$template->slug-($document->date)" }}" class="bg-secondary rounded-md p-2">Download</a>
+                            <a href="{{ route('download', $document->file->id) }}?fileName={{ "$template->slug-($document->date)" }}" class="bg-secondary rounded-md p-2">Download</a>
                         </div>
                     </div>
                 @endforeach

@@ -46,8 +46,8 @@ Route::middleware('auth')->group(function () {
         'prefix' => 'bhw',
         'can' => 'bhw',
     ], function () {
-        Route::get('documents/create/{template:slug}', [DocumentController::class, 'create'])->name('documents.create');
-        Route::post('documents', [DocumentController::class, 'store']);
+        Route::get('documents/create/{template:slug}', [DocumentDateController::class, 'create'])->name('documents.create');
+        Route::post('documents', [DocumentDateController::class, 'store']);
     });
 
     Route::group([
@@ -60,10 +60,8 @@ Route::middleware('auth')->group(function () {
     
     Route::get('barangay/{barangay:slug}', [DocumentController::class, 'index'])->name('documents.index');
     Route::get('templates', [DocumentTemplateController::class, 'index'])->name('templates.index');
-    Route::get('/barangay/{barangay:slug}/{template:slug}', [DocumentDateController::class, 'index'])->name('documents.show');
-    // Route::get('/barangay/{barangay}/document/{template:slug}', function (App\Models\Barangay $barangay, $slug) {
-        
-    // })->name('documents.showing');
+    Route::get('/barangay/{barangay:slug}/{template:slug}', [DocumentDateController::class, 'index'])->name('documents.dates.index');
+    Route::get('/barangay/{barangay:slug}/{template:slug}/{date}', [DocumentDateController::class, 'show'])->name('documents.dates.show');
     Route::get('/template/{template:slug}', [DocumentTemplateController::class, 'show'])->name('templates.show');
 
     Route::get('/download/{file}', [FileController::class, 'download'])->name('download');

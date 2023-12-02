@@ -44,7 +44,7 @@
                             @endisset
                         </div>
                         <div class="text-lg col-span-1">
-                            <a href="{{ route('documents.show', ['barangay' => $barangay->slug, 'template' => $document->template->slug]) }}"
+                            <a href="{{ route('documents.dates.index', ['barangay' => $barangay->slug, 'template' => $document->template->slug]) }}"
                             class="bg-secondary p-2 rounded">
                                 view all
                             </a>
