@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Gate;
 class DocumentDateController extends Controller
 {
     public function index(Barangay $barangay, $template)
-    {   
+    {
         $template = DocumentTemplate::where("slug", $template)->first();
 
         $documentDates = DocumentDate::orderBy('date', 'desc')->
@@ -26,7 +26,7 @@ class DocumentDateController extends Controller
                         )
                         ->with('publisher')
                         ->get();
-                            
+
         // ddd(getDate(strtotime($documentDates->first()->date)));
 
         return view('documents.dates.index', [
@@ -41,12 +41,12 @@ class DocumentDateController extends Controller
         $barangay = Barangay::where('slug', $barangay)->first();
         $template = DocumentTemplate::where('slug', $template)->first();
         $date = DocumentDate::where(
-            'document_id', 
+            'document_id',
             Document::where('document_template_id', $template->id)
                     ->where('barangay_id', $barangay->id)
                     ->first()->id
         )->where('date', $date)->first();
-        
+
         return view('documents.dates.show', [
             'template' => $template,
             'document' => $date,
@@ -62,7 +62,7 @@ class DocumentDateController extends Controller
     }
 
     public function store(Request $request)
-    {   
+    {
 
         $template = DocumentTemplate::where('id', $request->template)->first();
 
@@ -76,7 +76,6 @@ class DocumentDateController extends Controller
         ]);
 
         $date = "$request->year-$request->month-$request->day";
-
 
         $barangay = BarangayHealthWorker::where('user_id', auth()->user()->id)->first()->barangay;
         $document = Document::where('barangay_id',  $barangay->id)->where('document_template_id', $template->id)->first();
@@ -94,5 +93,16 @@ class DocumentDateController extends Controller
         ]);
 
         return redirect(route('documents.show', ['barangay' => $barangay->slug, 'template' => $template->slug]))->with('success', 'Document Added Successfully');
+    }
+
+    public function edit(Barangay $barangay, $template, $date)
+    {
+        $template = DocumentTemplate::where('slug', $template)->first();
+        $date = DocumentDate::where(
+            'document_id',
+            Document::where('document_template_id', $template->id)
+                    ->where('barangay_id', $barangay->id)
+                    ->first()->id
+        )->where('date', $date)->first();
     }
 }

@@ -46,8 +46,9 @@ Route::middleware('auth')->group(function () {
         'prefix' => 'bhw',
         'can' => 'bhw',
     ], function () {
-        Route::get('documents/create/{template:slug}', [DocumentDateController::class, 'create'])->name('documents.create');
+        Route::get('documents/create/{template:slug}', [DocumentDateController::class, 'create'])->name('documents.dates.create');
         Route::post('documents', [DocumentDateController::class, 'store']);
+        Route::get('/barangay/{barangay:slug}/{template:slug}/{date}', [DocumentDateController::class, 'edit'])->name('documents.dates.edit');
     });
 
     Route::group([
@@ -57,14 +58,14 @@ Route::middleware('auth')->group(function () {
         Route::post('templates', [DocumentTemplateController::class, 'store'])->name('templates.store')->can('cho');
         Route::get('templates/create', [DocumentTemplateController::class, 'create'])->name('templates.create')->can('cho');
     });
-    
+
     Route::get('barangay/{barangay:slug}', [DocumentController::class, 'index'])->name('documents.index');
     Route::get('templates', [DocumentTemplateController::class, 'index'])->name('templates.index');
-    Route::get('/barangay/{barangay:slug}/{template:slug}', [DocumentDateController::class, 'index'])->name('documents.dates.index');
-    Route::get('/barangay/{barangay:slug}/{template:slug}/{date}', [DocumentDateController::class, 'show'])->name('documents.dates.show');
-    Route::get('/template/{template:slug}', [DocumentTemplateController::class, 'show'])->name('templates.show');
+    Route::get('barangay/{barangay:slug}/{template:slug}', [DocumentDateController::class, 'index'])->name('documents.dates.index');
+    Route::get('barangay/{barangay:slug}/{template:slug}/{date}', [DocumentDateController::class, 'show'])->name('documents.dates.show');
+    Route::get('template/{template:slug}', [DocumentTemplateController::class, 'show'])->name('templates.show');
 
-    Route::get('/download/{file}', [FileController::class, 'download'])->name('download');
+    Route::get('download/{file}', [FileController::class, 'download'])->name('download');
 
     // Route::get('/{barangay:slug}', [DocumentController::class, 'index']);
 
@@ -73,4 +74,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
