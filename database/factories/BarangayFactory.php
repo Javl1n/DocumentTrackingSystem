@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Barangay>
@@ -17,8 +18,8 @@ class BarangayFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => $this->faker->city,
-            'slug' => $this->faker->slug,
+            'name' => $name = $this->faker->city,
+            'slug' => Str::slug($name, '-'),
         ];
     }
 }

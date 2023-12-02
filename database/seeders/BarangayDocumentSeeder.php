@@ -41,13 +41,13 @@ class BarangayDocumentSeeder extends Seeder
             ->create([
                 'barangay_id' => $barangayMain->id,
             ]);
-        
+
 
         Storage::deleteDirectory('templates');
         Storage::deleteDirectory('documents');
 
-        $templates = DocumentTemplate::factory(60)->create();
-        
+        $templates = DocumentTemplate::factory(30)->create();
+
         foreach ($templates as $template) {
             $url = 'templates/' . $template->slug . '.xlsx';
             Storage::copy('seederTemplate.xlsx', $url);
@@ -57,8 +57,7 @@ class BarangayDocumentSeeder extends Seeder
         }
 
         foreach (Barangay::all() as $barangay) {
-            if($barangay->name !== $barangayMain->name )
-            {
+            if ($barangay->name !== $barangayMain->name) {
                 BarangayHealthWorker::factory()
                     ->for(
                         $user = User::factory()->create([
@@ -66,52 +65,30 @@ class BarangayDocumentSeeder extends Seeder
                             'password' => bcrypt('admin123'),
                         ])
                     )->create([
-                        'barangay_id' => $barangay->id
-                    ]);
+                            'barangay_id' => $barangay->id
+                        ]);
             } else {
                 $user = $bhw;
             }
-            foreach($templates as $documentTemplate) {
+            foreach ($templates as $documentTemplate) {
                 $document = Document::factory()->create([
                     'barangay_id' => $barangay->id,
-                    'document_template_id'=> $documentTemplate->id,
+                    'document_template_id' => $documentTemplate->id,
                 ]);
 
-                $documentDates = DocumentDate::factory(5)->create([
+                $documentDates = DocumentDate::factory(10)->create([
                     'document_id' => $document,
                     'user_id' => $user->id,
                 ]);
 
-                foreach($documentDates as $date){
+                foreach ($documentDates as $date) {
                     $url = "documents/$barangay->slug/$documentTemplate->slug/$date->date.xlsx";
                     Storage::copy("seederTemplate.xlsx", $url);
                     $date->file()->create([
-                        "url"=> $url,
+                        "url" => $url,
                     ]);
                 }
             }
         }
-
-
-        // foreach (Document::all() as $document) {
-        //     $document = DocumentDate::factory(2)->create([
-        //         'document_id' => $document->id,
-        //         'user_id' => $bhw->id,
-        //     ]);
-        // }
-        // for ($i = 0; $i < 50; $i++) {
-        //     DocumentDate::factory()
-        //         ->for(
-        //             Document::factory()
-        //                 ->for(DocumentTemplate::factory()->create(), 'template')
-        //                 ->create([
-        //                     'barangay_id' => $barangay->id,
-        //                 ]),
-        //             'document'
-        //         )
-        //         ->create([
-        //             'user_id' => $bhw->id,
-        //         ]);
-        // }
     }
 }

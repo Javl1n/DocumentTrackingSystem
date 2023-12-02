@@ -21,9 +21,8 @@ class DocumentTemplateFactory extends Factory
         return [
             'name' => $name = fake()->unique()->catchPhrase(),
             'update_cycle' => fake()->numberBetween(1, 12),
-            'slug' =>  Str::slug($name, '-'),
-            // 'link' => Storage::copy('seederTemplate.xlsx', 'templates/' . $slug . '.xlsx'),
-            'description' => fake()->text(),
+            'slug' => Str::slug($name, '-'),
+            'description' => fake()->text(1000),
         ];
     }
 }

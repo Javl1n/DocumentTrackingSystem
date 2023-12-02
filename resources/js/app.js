@@ -2,7 +2,7 @@ import './bootstrap';
 
 import Alpine from 'alpinejs';
 import collapse from '@alpinejs/collapse';
-import 'flowbite';
+// import 'flowbite';
 
 
 window.Alpine = Alpine;
