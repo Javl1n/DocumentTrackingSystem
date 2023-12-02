@@ -19,7 +19,7 @@ class DocumentDateController extends Controller
             $worker = BarangayHealthWorker::where('user_id', auth()->user()->id)->first();
             $barangay = $worker->barangay_id;
         }
-        $documentDates = DocumentDate::latest()->
+        $documentDates = DocumentDate::orderBy('date', 'desc')->
                         where(
                             'document_id',
                             Document::where('barangay_id', $barangay)
@@ -27,8 +27,8 @@ class DocumentDateController extends Controller
                                     ->first()?->id
                         )
                             ->get();
-        
-        // ddd($documentDates->first());
+                            
+        // ddd(getDate(strtotime($documentDates->first()->date)));
 
         return view('documents.dates.index', [
             'template' => $template,

@@ -5,17 +5,22 @@
     <x-slot name="header">
         <span class="font-light text-gray-500"><a href="{{ route('documents.index', $barangay->slug) }}">{{ $barangay->name }}</a> / </span>{{ $template->name }}
     </x-slot>
-        <div class="grid grid-cols-10 gap-y-5">
-            <div class="col-span-7 font-bold">Date</div>
-            <div class="col-span-2 font-bold">Published By</div>
-            <div class="col-span-1"></div>
-            @foreach ($documents as $document)
-                <div class="col-span-7">{{ date('F d, Y', strtotime($document->date)) }}</div>
-                <div class="col-span-2">{{ $document->publisher->name }}</div>
-                <div class="col-span-1">
-                    <a href="{{ route('download', $template->file->id) }}" class="bg-blue-500 rounded-md px-2 py-2">Download</a>
-                </div>
-            @endforeach
+        <div class="grid grid-cols-10 px-8 border-b border-primary pb-2">
+            <div class="text-lg col-span-6">Date</div>
+            <div class="text-lg col-span-3">Published By</div>
+        </div>
+        <div class="flex-1 overflow-y-auto h-full pt-2">
+            @isset($documents)
+                @foreach ($documents as $document)
+                    <div class="grid grid-cols-10 px-8 py-3">
+                        <div class="col-span-6">{{ date('F d, Y', strtotime($document->date)) }}</div>
+                        <div class="col-span-3">{{ $document->publisher->name }}</div>
+                        <div class="col-span-1">
+                            <a href="{{ route('download', $template->file->id) }}" class="bg-secondary rounded-md p-2">Download</a>
+                        </div>
+                    </div>
+                @endforeach
+            @endisset
         </div>
         @bhw
             <a href="/bhw/documents/create/{{ $template->slug }}">

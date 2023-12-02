@@ -36,8 +36,11 @@
                         <div class="text-lg col-span-5">{{ $document->template->name }}</div>
                         <div class="text-lg col-span-2 ms-6">{{ $document->dates->count() }}</div>
                         <div class="text-lg col-span-2">
-                            @isset($document->dates->first()->created_at)
-                                {{ date_format($document->dates->first()->created_at, "F d") }}
+                            @php
+                                $date = App\Models\DocumentDate::where('document_id' , $document->id)->orderBy('date', 'desc')->first()->date;
+                            @endphp
+                            @isset($date)
+                                {{ date('F d, Y', strtotime($date)) }}
                             @else
                                None
                             @endisset

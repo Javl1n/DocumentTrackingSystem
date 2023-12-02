@@ -9,8 +9,35 @@
         <form action="/bhw/documents" method="post" enctype="multipart/form-data">
             @csrf
             <x-text-input name="template" value="{{ $template->id }}" type="hidden" />
-
-            <x-input-label for="link" value="Link" />
+            
+            <div class="">
+                <x-input-label>Date</x-input-label>
+                <div class="grid grid-cols-3 gap-4 mt-2">
+                    <div>
+                        <select name="month" id="month" class="w-full bg-background rounded-md border-gray-700 h-11">
+                            @for ($i = 1; $i <= 12; $i++)
+                                <option 
+                                    value="{{ $i }}"
+                                    {{ old('month') == $i ? 'selected' : '' }}
+                                    >
+                                    {{ DateTime::createFromFormat('!m', $i)->format('F') }}
+                                </option>
+                            @endfor
+                        </select>
+                        
+                    </div>
+                    <div>    
+                        <x-text-input name="day" type="number" placeholder="Date" class="h-11 w-full" :value="old('day')" />
+                        <x-input-error :messages="$errors->get('day')" class="mt-2" />
+                    </div>
+                    <div>
+                        <x-text-input name="year" type="text" placeholder="Year" class="h-11 w-full" :value="old('year')" />
+                        <x-input-error :messages="$errors->get('year')" class="mt-2" />
+                    </div>
+                </div>
+            </div>
+            
+            <x-input-label for="link" value="Link" class="mt-4" />
             <div class="flex">
                 <div class="flex-1 me-4">
                     {{-- <x-form.text-input-group name="link" type="file" label="File" /> --}}
@@ -28,24 +55,7 @@
             </div>
             <x-input-error :messages="$errors->get('link')" class="mt-2" />
 
-            <div class="mt-4">
-                <x-input-label>Date</x-input-label>
-                <div class="grid grid-cols-3 gap-4 mt-2">
-                    <select name="month" id="month" class="bg-background rounded-md border-gray-700 h-11">
-                        @for ($i = 1; $i <= 12; $i++)
-                            <option>{{ DateTime::createFromFormat('!m', $i)->format('F') }}</option>
-                        @endfor
-                    </select>
-                    <div>    
-                        <x-text-input name="day" type="number" placeholder="Date" class="h-11 w-full" />
-                        <x-input-error :messages="$errors->get('day')" class="mt-2" />
-                    </div>
-                    <div>
-                        <x-text-input name="year" type="text" placeholder="Year" class="h-11 w-full" />
-                        <x-input-error :messages="$errors->get('year')" class="mt-2" />
-                    </div>
-                </div>
-            </div>
+            
             <div class="mt-4">
                 <x-input-label>Description About this template</x-input-label>
                 <div class="bg-background p-5 rounded-md border border-gray-700 mt-2 h-[56vh] overflow-y-auto">

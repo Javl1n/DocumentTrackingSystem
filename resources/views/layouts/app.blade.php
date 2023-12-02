@@ -30,7 +30,7 @@
                 @endif
 
                 <!-- Page Content -->
-                <main class="flex-1 flex flex-col h-screen">
+                <main class="flex-1 flex flex-col h-screen overflow-y-auto">
                     @if (isset($header))
                         <header class="shadow">
                             <div class="py-6 px-4 sm:px-6 lg:px-8">

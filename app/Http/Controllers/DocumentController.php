@@ -30,26 +30,32 @@ class DocumentController extends Controller
     public function store(Request $request)
     {   
 
-        $template = DocumentTemplate::where('id', $request->template)->first()->slug;
+        $template = DocumentTemplate::where('id', $request->template)->first();
 
         // ddd(pathinfo($request->link->getClientOriginalName(), PATHINFO_FILENAME) === $template);
 
-
         $request->validate([
-            'link' => ['mimes:xls,xlm,xla,xlsx,docx', new SameFormat($template)],
-            'year' => ['lte:' . date('Y'),],
-            'day'=> ['lte:31'],
+            'link' => ['required', 'mimes:xls,xlm,xla,xlsx,docx', new SameFormat($template->slug)],
+            'year' => ['required', 'lte:' . date('Y'),],
+            'day'=> ['required', 'lte:31', 'gte:1'],
+            'month' => ['required', 'lte:12', 'gte:1'],
         ]);
 
+        $date = "$request->year-$request->month-$request->day";
+
+
         $barangay = BarangayHealthWorker::where('user_id', auth()->user()->id)->first()->barangay;
-        $document = Document::where('barangay_id',  $barangay->id)->first();
+        $document = Document::where('barangay_id',  $barangay->id)->where('document_template_id', $template->id)->first();
+
+        // ddd( "$template->slug-$date" );
 
         DocumentDate::create([
             'document_id' => $document->id,
             'user_id' => auth()->user()->id,
+            'date' => $date,
+            'url' => $request->file('link')->storeAs("documents/$barangay->slug/$template->slug/$date." . $request->link->getClientOriginalExtension()),
         ]);
 
-
-        return redirect("/template/$template")->with('success', 'Document Added Successfully');
+        return redirect("/document/$template->slug")->with('success', 'Document Added Successfully');
     }
 }

@@ -44,6 +44,7 @@ class BarangayDocumentSeeder extends Seeder
         
 
         Storage::deleteDirectory('templates');
+        Storage::deleteDirectory('documents');
 
         $templates = DocumentTemplate::factory(20)->create();
         
@@ -56,15 +57,37 @@ class BarangayDocumentSeeder extends Seeder
         }
 
         foreach (Barangay::all() as $barangay) {
+            if($barangay->name !== $barangayMain->name )
+            {
+                BarangayHealthWorker::factory()
+                    ->for(
+                        $user = User::factory()->create([
+                            'user_type' => 'BHW',
+                        ])
+                    )->create([
+                        'barangay_id' => $barangay->id
+                    ]);
+            } else {
+                $user = $bhw;
+            }
             foreach($templates as $documentTemplate) {
                 $document = Document::factory()->create([
                     'barangay_id' => $barangay->id,
                     'document_template_id'=> $documentTemplate->id,
                 ]);
-                // DocumentDate::factory(2)->create([
-                //     'document_id' => $document->id,
-                //     'user_id' => $bhw->id,
-                // ]);
+
+                $documentDates = DocumentDate::factory(10)->create([
+                    'document_id' => $document,
+                    'user_id' => $user->id,
+                ]);
+
+                foreach($documentDates as $date){
+                    $url = "documents/$barangay->slug/$documentTemplate->slug/$date->date.xlsx";
+                    Storage::copy("seederTemplate.xlsx", $url);
+                    $date->file()->create([
+                        "url"=> $url,
+                    ]);
+                }
             }
         }
 
