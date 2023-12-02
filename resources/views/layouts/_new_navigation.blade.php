@@ -9,6 +9,7 @@
      </div>
      <div x-show="hover"
      x-transition.origin.left x-transition.duration.200ms
+     x-cloak
      >
           <div class="dark:bg-background absolute h-full w-80 pr-4">
                <x-new-navigation.link icon="file" :first="true" href="/">Documents</x-new-navigation.link>

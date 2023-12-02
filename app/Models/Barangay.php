@@ -13,4 +13,9 @@ class Barangay extends Model
     {
         return $this->hasMany(BarangayHealthWorker::class);
     }
+
+    public function documents()
+    {
+        return $this->hasMany(Document::class);
+    }
 }

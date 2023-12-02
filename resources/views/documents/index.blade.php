@@ -1,6 +1,6 @@
 <x-app-layout :sidebar="true">
     <x-slot name="sidebar">
-        <x-documents.sidebar :barangay="$barangay->id"  />
+        <x-documents.sidebar :barangay="$barangay"  />
     </x-slot>
     <x-slot name="header">
         <div class="flex justify-between">
@@ -36,17 +36,15 @@
                         <div class="text-lg col-span-5">{{ $document->template->name }}</div>
                         <div class="text-lg col-span-2 ms-6">{{ $document->dates->count() }}</div>
                         <div class="text-lg col-span-2">
-                            @php
-                                $date = App\Models\DocumentDate::where('document_id' , $document->id)->orderBy('date', 'desc')->first()->date;
-                            @endphp
-                            @isset($date)
-                                {{ date('F d, Y', strtotime($date)) }}
+                            
+                            @isset($document->dates()->first()->date)
+                                {{ date('F d, Y', strtotime($document->dates()->first()->date)) }}
                             @else
                                None
                             @endisset
                         </div>
                         <div class="text-lg col-span-1">
-                            <a href="/document/{{ $document->template->slug }}@cho?barangay={{ $barangay->id }}@endcho"
+                            <a href="{{ route('documents.show', ['barangay' => $barangay->slug, 'template' => $document->template->slug]) }}"
                             class="bg-secondary p-2 rounded">
                                 view all
                             </a>

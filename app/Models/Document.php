@@ -32,6 +32,6 @@ class Document extends Model
 
     public function dates()
     {
-        return $this->hasMany(DocumentDate::class);
+        return $this->hasMany(DocumentDate::class)->orderBy('date', 'desc');
     }
 }

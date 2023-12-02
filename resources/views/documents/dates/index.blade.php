@@ -1,6 +1,6 @@
 <x-app-layout :sidebar="true">
     <x-slot name="sidebar">
-        <x-documents.sidebar :barangay="$barangay->id" />
+        <x-documents.sidebar :barangay="$barangay" />
     </x-slot>
     <x-slot name="header">
         <span class="font-light text-gray-500"><a href="{{ route('documents.index', $barangay->slug) }}">{{ $barangay->name }}</a> / </span>{{ $template->name }}
@@ -16,7 +16,7 @@
                         <div class="col-span-6">{{ date('F d, Y', strtotime($document->date)) }}</div>
                         <div class="col-span-3">{{ $document->publisher->name }}</div>
                         <div class="col-span-1">
-                            <a href="{{ route('download', $template->file->id) }}" class="bg-secondary rounded-md p-2">Download</a>
+                            <a href="{{ route('download', $template->file->id) }}?fileName={{ "$template->slug-($document->date)" }}" class="bg-secondary rounded-md p-2">Download</a>
                         </div>
                     </div>
                 @endforeach

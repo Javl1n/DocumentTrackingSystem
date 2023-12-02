@@ -46,7 +46,7 @@ class BarangayDocumentSeeder extends Seeder
         Storage::deleteDirectory('templates');
         Storage::deleteDirectory('documents');
 
-        $templates = DocumentTemplate::factory(20)->create();
+        $templates = DocumentTemplate::factory(60)->create();
         
         foreach ($templates as $template) {
             $url = 'templates/' . $template->slug . '.xlsx';
@@ -63,6 +63,7 @@ class BarangayDocumentSeeder extends Seeder
                     ->for(
                         $user = User::factory()->create([
                             'user_type' => 'BHW',
+                            'password' => bcrypt('admin123'),
                         ])
                     )->create([
                         'barangay_id' => $barangay->id
@@ -76,7 +77,7 @@ class BarangayDocumentSeeder extends Seeder
                     'document_template_id'=> $documentTemplate->id,
                 ]);
 
-                $documentDates = DocumentDate::factory(10)->create([
+                $documentDates = DocumentDate::factory(5)->create([
                     'document_id' => $document,
                     'user_id' => $user->id,
                 ]);

@@ -60,7 +60,10 @@ Route::middleware('auth')->group(function () {
     
     Route::get('barangay/{barangay:slug}', [DocumentController::class, 'index'])->name('documents.index');
     Route::get('templates', [DocumentTemplateController::class, 'index'])->name('templates.index');
-    Route::get('/document/{template:slug}', [DocumentDateController::class, 'index'])->name('documents.show');
+    Route::get('/barangay/{barangay:slug}/{template:slug}', [DocumentDateController::class, 'index'])->name('documents.show');
+    // Route::get('/barangay/{barangay}/document/{template:slug}', function (App\Models\Barangay $barangay, $slug) {
+        
+    // })->name('documents.showing');
     Route::get('/template/{template:slug}', [DocumentTemplateController::class, 'show'])->name('templates.show');
 
     Route::get('/download/{file}', [FileController::class, 'download'])->name('download');

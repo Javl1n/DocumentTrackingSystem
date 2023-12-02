@@ -2,6 +2,7 @@
 
 namespace App\View\Components\Documents;
 
+use App\Models\Barangay;
 use App\Models\Document;
 use App\Models\DocumentDate;
 use App\Models\DocumentTemplate;
@@ -17,9 +18,9 @@ class Sidebar extends Component
      * Create a new component instance.
      */
     public function __construct(
-        public string $barangay,
+        public Barangay $barangay,
     ) {
-        $this->documents = Document::where('barangay_id', $barangay)->get();
+        $this->documents = Document::where('barangay_id', $barangay->id)->get();
     }
 
     /**

@@ -14,7 +14,6 @@ class DocumentDate extends Model
     //     'created_at' => 'date:Y-m-d'
     // ];
 
-    protected $with = ['publisher'];
 
     public function document()
     {

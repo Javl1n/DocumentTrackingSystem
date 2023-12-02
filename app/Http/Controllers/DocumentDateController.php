@@ -11,29 +11,26 @@ use Illuminate\Support\Facades\Gate;
 
 class DocumentDateController extends Controller
 {
-    public function index(DocumentTemplate $template)
-    {
-        if (Gate::allows('cho')) {
-            $barangay = request()->barangay;
-        } elseif (Gate::allows('bhw')) {
-            $worker = BarangayHealthWorker::where('user_id', auth()->user()->id)->first();
-            $barangay = $worker->barangay_id;
-        }
+    public function index(Barangay $barangay, $template)
+    {   
+        $template = DocumentTemplate::where("slug", $template)->first();
+
         $documentDates = DocumentDate::orderBy('date', 'desc')->
                         where(
                             'document_id',
-                            Document::where('barangay_id', $barangay)
+                            Document::where('barangay_id', $barangay->id)
                                     ->where('document_template_id', $template->id)
                                     ->first()?->id
                         )
-                            ->get();
+                        ->with('publisher')
+                        ->get();
                             
         // ddd(getDate(strtotime($documentDates->first()->date)));
 
         return view('documents.dates.index', [
             'template' => $template,
             'documents' => $documentDates,
-            'barangay' => Barangay::where('id' , $barangay)->first(),
+            'barangay' => Barangay::where('id' , $barangay->id)->first(),
         ]);
     }
 }
