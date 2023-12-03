@@ -49,7 +49,7 @@
             </div>
             <div x-show="bhw" class=" border-none w-[399px] z-50 mt-6 rounded-lg">
                 <x-input-label for="barangay" :value="__('Barangay')" />
-                <select class="border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full" name="barangay" id="barangay">
+                <select class="border-gray-300 dark:border-gray-700 dark:bg-background dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm block mt-1 w-full" name="barangay" id="barangay">
                     @foreach(App\Models\Barangay::all() as $barangay)
                         <option value="{{ $barangay->id }}">{{ $barangay->name }}</option>
                     @endforeach
@@ -111,9 +111,9 @@
                 {{ __('Already registered?') }}
             </a>
 
-            <x-primary-button class="ml-4">
+            <x-form.buttons.primary-button class="ml-4">
                 {{ __('Register') }}
-            </x-primary-button>
+            </x-form.buttons.primary-button>
         </div>
     </form>
 </x-guest-layout>
