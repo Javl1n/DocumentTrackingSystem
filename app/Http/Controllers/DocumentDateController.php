@@ -92,17 +92,25 @@ class DocumentDateController extends Controller
             'url' =>  $request->file('link')->storeAs("documents/$barangay->slug/$template->slug/$date." . $request->link->getClientOriginalExtension())
         ]);
 
+
+
         return redirect(route('documents.show', ['barangay' => $barangay->slug, 'template' => $template->slug]))->with('success', 'Document Added Successfully');
     }
 
     public function edit(Barangay $barangay, $template, $date)
     {
         $template = DocumentTemplate::where('slug', $template)->first();
-        $date = DocumentDate::where(
-            'document_id',
-            Document::where('document_template_id', $template->id)
+        $document = Document::where('document_template_id', $template->id)
                     ->where('barangay_id', $barangay->id)
-                    ->first()->id
-        )->where('date', $date)->first();
+                    ->first();
+        $date = DocumentDate::where('document_id', $document->id )
+                            ->where('date', $date)
+                            ->first();
+        
+        return view('documents.dates.edit', [
+            'template' => $template,
+            'document' => $document,
+            'date'=> $date
+        ]);
     }
 }

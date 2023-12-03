@@ -87,6 +87,11 @@ class BarangayDocumentSeeder extends Seeder
                     $date->file()->create([
                         "url" => $url,
                     ]);
+                    $date->history()->create([
+                        'user_id' => $user->id,
+                        'description' => "Document Uploaded",
+                        'created_at' => date('Y-m-d h:m:s' , strtotime($date->date))
+                    ]);
                 }
             }
         }

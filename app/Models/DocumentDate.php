@@ -14,7 +14,9 @@ class DocumentDate extends Model
     //     'created_at' => 'date:Y-m-d'
     // ];
 
+    protected $with = ['history'];
 
+        
     public function document()
     {
         return $this->belongsTo(Document::class);
@@ -28,5 +30,10 @@ class DocumentDate extends Model
     public function file(): MorphOne
     {
         return $this->morphOne(File::class,'fileable');
+    }
+
+    public function history()
+    {
+        return $this->hasMany(DocumentHistory::class);
     }
 }

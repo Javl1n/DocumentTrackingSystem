@@ -1,0 +1,27 @@
+<?php
+
+namespace Database\Factories;
+
+use App\Models\DocumentDate;
+use App\Models\User;
+use Illuminate\Database\Eloquent\Factories\Factory;
+
+/**
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\DocumentHistory>
+ */
+class DocumentHistoryFactory extends Factory
+{
+    /**
+     * Define the model's default state.
+     *
+     * @return array<string, mixed>
+     */
+    public function definition(): array
+    {
+        return [
+            'document_date_id' => DocumentDate::factory()->create(),
+            'user_id'=> User::factory()->create(),
+            'description' => fake()->sentence(),
+        ];
+    }
+}

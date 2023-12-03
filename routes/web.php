@@ -46,9 +46,9 @@ Route::middleware('auth')->group(function () {
         'prefix' => 'bhw',
         'can' => 'bhw',
     ], function () {
-        Route::get('documents/create/{template:slug}', [DocumentDateController::class, 'create'])->name('documents.dates.create');
-        Route::post('documents', [DocumentDateController::class, 'store']);
-        Route::get('/barangay/{barangay:slug}/{template:slug}/{date}', [DocumentDateController::class, 'edit'])->name('documents.dates.edit');
+        Route::get('documents/create/{template:slug}', [DocumentDateController::class, 'create'])->name('documents.dates.create')->can('bhw');
+        Route::post('documents', [DocumentDateController::class, 'store'])->can('bhw');
+        Route::get('/{barangay:slug}/{template:slug}/{date}', [DocumentDateController::class, 'edit'])->name('documents.dates.edit')->can('bhw');
     });
 
     Route::group([
