@@ -20,7 +20,10 @@
                         </div>
                         <div class="col-span-3">{{ $document->publisher->name }}</div>
                         <div class="col-span-1">
-                            <a href="{{ route('download', $document->file->id) }}?fileName={{ "$template->slug-($document->date)" }}" class="bg-secondary rounded-md p-2">Download</a>
+                            {{-- <a href="{{ route('download', $document->file->id) }}?fileName={{ "$template->slug-($document->date)" }}" class="bg-secondary rounded-md p-2">Download</a> --}}
+                            <a class="bg-secondary rounded-md p-2" href="{{ route('documents.dates.show', ['barangay' => $barangay->slug, 'template' => $template->slug, 'date' => $document->date ]) }}" >
+                                view all
+                            </a>
                         </div>
                     </div>
                 @endforeach

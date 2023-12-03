@@ -48,6 +48,7 @@ Route::middleware('auth')->group(function () {
     ], function () {
         Route::get('documents/create/{template:slug}', [DocumentDateController::class, 'create'])->name('documents.dates.create')->can('bhw');
         Route::post('documents', [DocumentDateController::class, 'store'])->can('bhw');
+        Route::put('/update/{date:id}', [DocumentDateController::class, 'update'])->name('documents.dates.update')->can('bhw');
         Route::get('/{barangay:slug}/{template:slug}/{date}', [DocumentDateController::class, 'edit'])->name('documents.dates.edit')->can('bhw');
     });
 

@@ -41,11 +41,11 @@
                     </a>
                </div>
                <div class="mt-4 flex flex-col h-96 overflow-y-auto">
-                    @foreach ($document->history as $history)
+                    @foreach ($histories as $history)
                          <div class="w-full bg-background-light mb-4 px-4 py-3 rounded-lg">
                          <div class="text-lg text-text mb-0 leading-5">{{ date('F d, Y h:m a', strtotime($history->created_at)) }} 
                               <span class="text-gray-500 text-sm mt-0">{{ $history->created_at->diffForHumans() }} <br> 
-                                   Frank Leimbergh Armodia</span></div>
+                                   {{ $history->editor->name }}</span></div>
                          {{-- <div class="text-gray-500 text-sm mt-0">Frank Leimbergh Armodia</div> --}}
                          <p class="mt-1 indent-5 text-xl">
                               {{ $history->description }}

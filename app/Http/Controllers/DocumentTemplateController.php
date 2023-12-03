@@ -46,11 +46,15 @@ class DocumentTemplateController extends Controller
             'update_cycle' => $request->cycle,
             'slug' => $slug = Str::slug($request->title, '-'),
             // 'link' => $request->file('link')->storeAs('templates', $slug . '.' . $request->link->getClientOriginalExtension()),
-        ])->file()->create([
+        ]);
+        
+        
+        $template->file()->create([
             'url' => $request->file('link')->storeAs('templates', $slug . '.' . $request->link->getClientOriginalExtension()),
         ]);
 
-        $barangays = Barangay::get();
+
+        $barangays = Barangay::all();
 
         foreach($barangays as $barangay) {
             Document::create([
@@ -59,12 +63,6 @@ class DocumentTemplateController extends Controller
             ]);
         }
 
-        // foreach($barangays as $barangay){
-        //     Document::create([
-        //         'name' => 
-        //     ])
-        // }
-
-        return redirect('/');
+        return redirect('/templates');
     }
 }

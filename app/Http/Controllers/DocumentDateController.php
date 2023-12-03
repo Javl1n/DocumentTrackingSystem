@@ -6,10 +6,15 @@ use App\Models\BarangayHealthWorker;
 use App\Models\Barangay;
 use App\Models\Document;
 use App\Models\DocumentDate;
+use App\Models\DocumentHistory;
 use App\Models\DocumentTemplate;
+use App\Rules\SameFileName;
 use App\Rules\SameFormat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
+use Illuminate\Validation\Rules\File;
 
 class DocumentDateController extends Controller
 {
@@ -51,6 +56,7 @@ class DocumentDateController extends Controller
             'template' => $template,
             'document' => $date,
             'barangay' => $barangay,
+            'histories' => DocumentHistory::where('document_date_id', $date->id)->orderBy('created_at', 'desc')->get()
         ]);
     }
 
@@ -66,12 +72,25 @@ class DocumentDateController extends Controller
 
         $template = DocumentTemplate::where('id', $request->template)->first();
 
-        // ddd(pathinfo($request->link->getClientOriginalName(), PATHINFO_FILENAME) === $template);
+        $day = 30;
+
+        if (in_array($request->month, [1, 3, 5, 7, 8, 10, 12]))
+        {
+            $day = 31;
+        }
+        else if ($request->month === '2')
+        {
+            $day = 28;
+            if($request->year%4 === 0)
+            {
+                $day = 29;
+            }
+        }
 
         $request->validate([
             'link' => ['required', 'mimes:xls,xlm,xla,xlsx,docx', new SameFormat($template->slug)],
             'year' => ['required', 'lte:' . date('Y'),],
-            'day'=> ['required', 'lte:31', 'gte:1'],
+            'day'=> ['required', "lte:$day", 'gte:1'],
             'month' => ['required', 'lte:12', 'gte:1'],
         ]);
 
@@ -92,9 +111,13 @@ class DocumentDateController extends Controller
             'url' =>  $request->file('link')->storeAs("documents/$barangay->slug/$template->slug/$date." . $request->link->getClientOriginalExtension())
         ]);
 
+        $documentWithDate->history()->create([
+            'user_id' => auth()->user()->id,
+            'description' => "Document Uploaded",
+        ]);
 
 
-        return redirect(route('documents.show', ['barangay' => $barangay->slug, 'template' => $template->slug]))->with('success', 'Document Added Successfully');
+        return redirect(route('documents.dates.index', ['barangay' => $barangay->slug, 'template' => $template->slug]))->with('success', 'Document Added Successfully');
     }
 
     public function edit(Barangay $barangay, $template, $date)
@@ -107,10 +130,35 @@ class DocumentDateController extends Controller
                             ->where('date', $date)
                             ->first();
         
+        $fileExtension = explode('.' ,$date->file->url)[1];
+
+        $file = $template->slug . '-(' . $date->date . ').' . $fileExtension;
+
+
         return view('documents.dates.edit', [
             'template' => $template,
             'document' => $document,
-            'date'=> $date
+            'date'=> $date,
+            'file' => $file,
         ]);
+    }
+
+    public function update(DocumentDate $date, Request $request)
+    {
+        $request->validate([
+            'link' => ['required', new SameFileName($request->file) ],
+            'description' => ['required', 'min:15'],
+        ]);
+
+        Storage::delete($date->file->url);
+
+        $request->file('link')->storeAs($date->file->url);
+
+        $date->history()->create([
+            'user_id' => auth()->user()->id,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('documents.dates.show', ['barangay' => $date->document->barangay->slug, 'template' => $date->document->template->slug, 'date' => $date->date ])->with('success','');
     }
 }

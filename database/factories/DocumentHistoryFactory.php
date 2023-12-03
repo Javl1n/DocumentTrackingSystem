@@ -19,8 +19,6 @@ class DocumentHistoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'document_date_id' => DocumentDate::factory()->create(),
-            'user_id'=> User::factory()->create(),
             'description' => fake()->sentence(),
         ];
     }

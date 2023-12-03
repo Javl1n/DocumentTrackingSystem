@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\Barangay;
 use App\Models\BarangayHealthWorker;
 use App\Models\Document;
+use App\Models\DocumentHistory;
 use App\Models\File;
 use App\Models\DocumentDate;
 use App\Models\DocumentTemplate;
@@ -92,6 +93,14 @@ class BarangayDocumentSeeder extends Seeder
                         'description' => "Document Uploaded",
                         'created_at' => date('Y-m-d h:m:s' , strtotime($date->date))
                     ]);
+
+                    for($i = 0; $i <= 10; $i++) {
+                        DocumentHistory::factory()->create([    
+                            'user_id' => $user->id,
+                            'document_date_id'=> $date->id,
+                            'created_at' => fake()->dateTimeBetween($date->date)
+                        ]);
+                    }
                 }
             }
         }
