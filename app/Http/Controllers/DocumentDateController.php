@@ -41,9 +41,8 @@ class DocumentDateController extends Controller
         ]);
     }
 
-    public function show($barangay, $template, $date)
+    public function show(Barangay $barangay, $template, $date)
     {
-        $barangay = Barangay::where('slug', $barangay)->first();
         $template = DocumentTemplate::where('slug', $template)->first();
         $date = DocumentDate::where(
             'document_id',

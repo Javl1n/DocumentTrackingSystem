@@ -14,7 +14,7 @@ class DocumentDate extends Model
     //     'created_at' => 'date:Y-m-d'
     // ];
 
-    protected $with = ['history'];
+    // protected $with = [];
 
         
     public function document()

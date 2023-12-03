@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\City\BarangayDocumentController;
+use App\Http\Controllers\DocumentAccessController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DocumentDateController;
 use App\Http\Controllers\DocumentTemplateController;
@@ -44,12 +45,11 @@ Route::middleware('auth')->group(function () {
 
     Route::group([
         'prefix' => 'bhw',
-        'can' => 'bhw',
     ], function () {
         Route::get('documents/create/{template:slug}', [DocumentDateController::class, 'create'])->name('documents.dates.create')->can('bhw');
         Route::post('documents', [DocumentDateController::class, 'store'])->can('bhw');
-        Route::put('/update/{date:id}', [DocumentDateController::class, 'update'])->name('documents.dates.update')->can('bhw');
-        Route::get('/{barangay:slug}/{template:slug}/{date}', [DocumentDateController::class, 'edit'])->name('documents.dates.edit')->can('bhw');
+        Route::put('/update/{barangay:slug}/{date:id}', [DocumentDateController::class, 'update'])->name('documents.dates.update')->can('bhw');
+        Route::get('/{barangay:slug}/{template:slug}/{date}/edit', [DocumentDateController::class, 'edit'])->name('documents.dates.edit')->can('bhw');
     });
 
     Route::group([
@@ -60,10 +60,20 @@ Route::middleware('auth')->group(function () {
         Route::get('templates/create', [DocumentTemplateController::class, 'create'])->name('templates.create')->can('cho');
     });
 
-    Route::get('barangay/{barangay:slug}', [DocumentController::class, 'index'])->name('documents.index');
+    Route::group([
+        'prefix'=> 'barangay', 
+        'middleware' => 'barangayWithCho',
+    ], function () {
+        Route::get('/{barangay:slug}/{template:slug}/{date:date}/access', [DocumentAccessController::class, 'edit'])->name('dates.access.edit');
+        Route::get('/{barangay:slug}/{template:slug}', [DocumentDateController::class, 'index'])->name('documents.dates.index');
+        Route::get('/{barangay:slug}', [DocumentController::class, 'index'])->name('documents.index');
+    });
+
+    Route::get('barangay/{barangay:slug}/{template:slug}/{date}', [DocumentDateController::class, 'show'])
+            ->name('documents.dates.show')
+            ->middleware('brangayAndAllowedAccess');
+
     Route::get('templates', [DocumentTemplateController::class, 'index'])->name('templates.index');
-    Route::get('barangay/{barangay:slug}/{template:slug}', [DocumentDateController::class, 'index'])->name('documents.dates.index');
-    Route::get('barangay/{barangay:slug}/{template:slug}/{date}', [DocumentDateController::class, 'show'])->name('documents.dates.show');
     Route::get('template/{template:slug}', [DocumentTemplateController::class, 'show'])->name('templates.show');
 
     Route::get('download/{file}', [FileController::class, 'download'])->name('download');
