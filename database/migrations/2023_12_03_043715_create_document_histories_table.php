@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('document_date_id');
             $table->foreignId('user_id');
+            $table->integer('version')->nullable();
             $table->text('description');
             $table->timestamps();
         });

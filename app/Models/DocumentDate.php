@@ -28,7 +28,7 @@ class DocumentDate extends Model
     }
 
     public function file(): MorphOne
-    {
+{
         return $this->morphOne(File::class,'fileable');
     }
 

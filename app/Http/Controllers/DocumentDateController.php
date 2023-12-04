@@ -142,8 +142,10 @@ class DocumentDateController extends Controller
         ]);
     }
 
-    public function update(DocumentDate $date, Request $request)
+    public function update(Barangay $barangay, $date, Request $request)
     {
+        $date = DocumentDate::where('id', $request->date)->first();
+
         $request->validate([
             'link' => ['required', new SameFileName($request->file) ],
             'description' => ['required', 'min:15'],

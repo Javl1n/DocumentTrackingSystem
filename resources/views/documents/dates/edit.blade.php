@@ -9,10 +9,11 @@
      </x-slot>
 
      <x-panel class="flex-auto w-2/4 mx-auto">
-     <form action="{{ route('documents.dates.update', $date) }}" method="post" enctype="multipart/form-data">
+     <form action="{{ route('documents.dates.update', ['barangay' => $document->barangay->slug, 'date' => $date->date]) }}" method="post" enctype="multipart/form-data">
           @csrf
           @method('PUT')
           <x-text-input name="file" value="{{ $file }}" type="hidden" />
+          <x-text-input name="date" value="{{ $date->id }}" type="hidden" />
           <x-input-label for="link" value="Link" class="" />
           <div class="flex">
                <div class="flex-1 me-4">

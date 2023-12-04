@@ -20,4 +20,9 @@ class BarangayHealthWorker extends Model
     {
         return $this->belongsTo(Barangay::class);
     }
+
+    public function access()
+    {
+        return $this->hasMany(DocumentAccess::class, 'user_id');
+    }
 }

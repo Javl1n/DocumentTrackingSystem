@@ -51,7 +51,7 @@ class User extends Authenticatable
 
     public function cityAccount()
     {
-        return $this->hasOne(BarangayHealthWorker::class);
+        return $this->hasOne(CityHealthWorker::class);
     }
 
     public function documents()

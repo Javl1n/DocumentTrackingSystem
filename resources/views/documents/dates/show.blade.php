@@ -17,20 +17,23 @@
                     </span>
                     {{ date('F d, Y', strtotime($document->date)) }}
                </div>
-               <div class="grid grid-cols-12 gap-2">
+               <div class="flex flex-row-reverse gap-2">
                     <a href="{{ route('download', $document->file->id) }}?fileName={{ "$template->slug-($document->date)" }}"
-                         class="bg-secondary rounded-md p-2 text-lg text-center hover:bg-primary col-span-4">
+                         class="bg-secondary rounded-md p-2 text-lg text-center hover:bg-primary w-28">
                          Download
                     </a>
-                    <a 
-                         href="{{ route('documents.dates.edit', [ 'barangay' => $barangay->slug, 'template' => $template->slug, 'date' => $document->date ]) }}" 
-                         class="bg-secondary rounded-md p-2 text-lg text-center hover:bg-primary col-span-4"
-                    >
-                         Edit
-                    </a>
+                    @bhw
+                         <a 
+                              href="{{ route('documents.dates.edit', [ 'barangay' => $barangay->slug, 'template' => $template->slug, 'date' => $document->date ]) }}" 
+                              class="bg-secondary rounded-md p-2 text-lg text-center hover:bg-primary w-28"
+                         >
+                              Edit
+                         </a>
+                    @endbhw
+                    
                     <a 
                          href="{{ route('dates.access.edit', [ 'barangay' => $barangay->slug, 'template' => $template->slug, 'date' => $document->date ]) }}" 
-                         class="bg-secondary rounded-md p-2 text-lg text-center hover:bg-primary col-span-4"
+                         class="bg-secondary rounded-md p-2 text-lg text-center hover:bg-primary w-28"
                     >
                          Access
                     </a>
@@ -52,11 +55,11 @@
                <div class="mt-4 flex flex-col h-96 overflow-y-auto">
                     @foreach ($histories as $history)
                          <div class="w-full bg-background-light mb-4 px-4 py-3 rounded-lg">
-                         <div class="text-lg text-text mb-0 leading-5">{{ date('F d, Y h:m a', strtotime($history->created_at)) }} 
-                              <span class="text-gray-500 text-sm mt-0">{{ $history->created_at->diffForHumans() }} <br> {{ $history->editor->name }}</span></div>
-                         <p class="mt-1 indent-5 text-xl">  
-                              {{ $history->description }}
-                         </p>
+                              <div class="text-lg text-text mb-0 leading-5">{{ date('F d, Y h:m a', strtotime($history->created_at)) }} 
+                                   <span class="text-gray-500 text-sm mt-0">{{ $history->created_at->diffForHumans() }} <br> {{ $history->editor->name }}</span></div>
+                              <p class="mt-1 indent-5 text-xl">  
+                                   {{ $history->description }}
+                              </p>
                          </div>
                     @endforeach
                </div>

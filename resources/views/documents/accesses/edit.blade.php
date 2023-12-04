@@ -20,7 +20,7 @@
                     <div class="flex-1 overflow-y-auto rounded-md">
                          @foreach($users as $worker)
                               <div class="flex bg-background w-full mb-2 p-5 rounded-md">
-                                   <input type="checkbox" class="my-auto h-10 w-10 rounded-md me-5 bg-gray-700 border-none">
+                                   <input name="user" type="checkbox" value="{{ $worker->id }}" class="my-auto h-10 w-10 rounded-md me-5 bg-gray-700 border-none">
                                    <div>
                                         <span class="font-bold text-lg leading-5">{{ $worker->user->name }}</span> <br> <span class="text-sm text-gray-600">{{ $worker->user->email }}</span>
                                    </div>

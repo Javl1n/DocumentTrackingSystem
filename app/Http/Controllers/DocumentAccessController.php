@@ -30,4 +30,25 @@ class DocumentAccessController extends Controller
             'users' => BarangayHealthWorker::whereNot('barangay_id', $barangay->id)->get(), 
         ]);
     }
+
+    public function update(Barangay $barangay, $template, $date, Request $request) 
+    {
+        $document = $barangay
+                        ->documents()
+                        ->where(
+                            'document_template_id', 
+                            DocumentTemplate::where('slug', $template)->first()->id
+                            )
+                        ->first();
+
+        $date = $document->dates()->where('date', $date)->first();
+
+        ddd($request->user);
+
+        return view('documents.accesses.edit', [
+            'date' => $date, 
+            'document' => $document,
+            'users' => BarangayHealthWorker::whereNot('barangay_id', $barangay->id)->get(), 
+        ]);
+    }
 }

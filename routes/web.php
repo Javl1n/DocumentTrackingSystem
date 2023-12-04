@@ -65,6 +65,7 @@ Route::middleware('auth')->group(function () {
         'middleware' => 'barangayWithCho',
     ], function () {
         Route::get('/{barangay:slug}/{template:slug}/{date:date}/access', [DocumentAccessController::class, 'edit'])->name('dates.access.edit');
+        Route::put('/{barangay:slug}/{template:slug}/{date:date}/access', [DocumentAccessController::class, 'update'])->name('dates.access.update');
         Route::get('/{barangay:slug}/{template:slug}', [DocumentDateController::class, 'index'])->name('documents.dates.index');
         Route::get('/{barangay:slug}', [DocumentController::class, 'index'])->name('documents.index');
     });
