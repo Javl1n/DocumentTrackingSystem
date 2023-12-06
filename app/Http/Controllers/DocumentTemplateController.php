@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class DocumentTemplateController extends Controller
-{
+{   
     public function index()
     {
         return view('templates.index', [
@@ -45,7 +45,7 @@ class DocumentTemplateController extends Controller
             'description' => $request->description,
             'update_cycle' => $request->cycle,
             'slug' => $slug = Str::slug($request->title, '-'),
-            // 'link' => $request->file('link')->storeAs('templates', $slug . '.' . $request->link->getClientOriginalExtension()),
+            'link' => $request->file('link')->storeAs('templates', $slug . '.' . $request->link->getClientOriginalExtension()),
         ]);
         
         
