@@ -15,7 +15,7 @@
                 <div class="flex h-full">
                     <div class="flex flex-col text-center justify-center mx-auto">
                         <h1 class="text-lg">Uploaded <br> Today</h1>
-                        <p class="text-9xl font-bold">{{ $today }}</p>
+                        <p class="text-9xl font-bold">{{ $today['total'] }}</p>
                     </div>
                     <div class="border border-gray-600">
                         
@@ -26,8 +26,8 @@
                     </div>
                 </div>
             </div>
-            <div class="col-span-5 row-span-6 col-start-8 col-end-13 rounded-lg bg-secondary-900">
-                <h1 class="text-2xl font-bold py-5 ps-4">Barangays</h1>
+            <div class="col-span-5 row-span-6 col-start-8 col-end-13 rounded-xl bg-secondary-900">
+                <h1 class="text-xl font-bold py-5 ps-4">Barangays</h1>
 
                 <div class="flex flex-col h-full overflow-y-auto gap-8 px-5">
                     @foreach ($barangays as $barangay)
@@ -48,8 +48,32 @@
                     @endforeach 
                 </div>
             </div>
-            <div class="col-span-7 w-full row-span-4 bg-background rounded-xl">
-                ad
+            <div class="col-span-7 w-full row-span-4 bg-background rounded-xl p-5">
+                <div class="text-xl font-bold mb-2">Statistics</div>
+                <div>
+                    <div class="bg-secondary-700 h-24 px-6 rounded-xl flex justify-between">
+                        <div class="flex flex-col justify-center">
+                            <h1 class="">Today</h1>
+                            <div class="text-4xl font-bold">
+                                {{ $today['total'] }}
+                            </div>
+                        </div>
+                        <div class="flex flex-col justify-center">
+                            
+                        </div>
+                    </div>
+                    <div class="bg-secondary-700 h-24 px-6 rounded-xl flex justify-between">
+                        <div class="flex flex-col justify-center">
+                            <h1 class="">Yesterday</h1>
+                            <div class="text-4xl font-bold">
+                                {{ $yesterday['total'] }}
+                            </div>
+                        </div>
+                        <div class="flex flex-col justify-center">
+                            
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </x-panel>
