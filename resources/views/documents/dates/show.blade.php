@@ -1,42 +1,55 @@
-<x-app-layout>
+<x-app-layout :hasSidebar="$myDocument">
      <x-slot name="sidebar">
           <x-documents.sidebar :barangay="$barangay" />
      </x-slot>
      <x-slot name="header">
           <div class="flex justify-between w-full">
                <div>
-                    <span class="font-light text-gray-500">
-                         <a href="{{ route('documents.index', $barangay->slug) }}">
-                         {{ $barangay->name }}
-                         </a>
-                         /
-                         <a href="{{ route('documents.dates.index', ['barangay' => $barangay->slug, 'template' => $template->slug]) }}">
-                         {{ $template->name }}
-                         </a>
-                         /
-                    </span>
+                    @if ($myDocument)
+                         <span class="font-light text-gray-500">
+                              <a href="{{ route('documents.index', $barangay->slug) }}">
+                              {{ $barangay->name }}
+                              </a>
+                              /
+                              <a href="{{ route('documents.dates.index', ['barangay' => $barangay->slug, 'template' => $template->slug]) }}">
+                              {{ $template->name }}
+                              </a>
+                              /
+                         </span>
+                    @else
+                         <span class="font-light text-gray-500">
+                              {{ $barangay->name }}
+                              /
+                              {{ $template->name }}
+                              /
+                         </span>
+                    @endif
                     {{ date('F d, Y', strtotime($document->date)) }}
                </div>
                <div class="flex flex-row-reverse gap-2">
-                    <a href="{{ route('download', $document->file->id) }}?fileName={{ "$template->slug-($document->date)" }}"
+                    {{-- <a href="{{ route('download', $document->file->id) }}?fileName={{ "$template->slug-($document->date)" }}"
                          class="bg-secondary rounded-md p-2 text-lg text-center hover:bg-primary w-28">
                          Download
-                    </a>
-                    @bhw
+                    </a> --}}
+                    @if ($myDocument)
+                         @bhw
+                              <a 
+                                   href="{{ route('documents.dates.edit', [ 'barangay' => $barangay->slug, 'template' => $template->slug, 'date' => $document->date ]) }}" 
+                                   class="bg-secondary rounded-md p-2 text-lg text-center hover:bg-primary w-28"
+                              >
+                                   Edit
+                              </a>
+                         @endbhw
+                         
                          <a 
-                              href="{{ route('documents.dates.edit', [ 'barangay' => $barangay->slug, 'template' => $template->slug, 'date' => $document->date ]) }}" 
+                              href="{{ route('dates.access.edit', [ 'barangay' => $barangay->slug, 'template' => $template->slug, 'date' => $document->date ]) }}" 
                               class="bg-secondary rounded-md p-2 text-lg text-center hover:bg-primary w-28"
                          >
-                              Edit
+                              Access
                          </a>
-                    @endbhw
+                    @endif
+
                     
-                    <a 
-                         href="{{ route('dates.access.edit', [ 'barangay' => $barangay->slug, 'template' => $template->slug, 'date' => $document->date ]) }}" 
-                         class="bg-secondary rounded-md p-2 text-lg text-center hover:bg-primary w-28"
-                    >
-                         Access
-                    </a>
                </div>
           </div>
      </x-slot>
@@ -55,11 +68,20 @@
                <div class="mt-4 flex flex-col h-96 overflow-y-auto">
                     @foreach ($histories as $history)
                          <div class="w-full bg-background-light mb-4 px-4 py-3 rounded-lg">
-                              <div class="text-lg text-text mb-0 leading-5">{{ date('F d, Y h:m a', strtotime($history->created_at)) }} 
-                                   <span class="text-gray-500 text-sm mt-0">{{ $history->created_at->diffForHumans() }} <br> {{ $history->editor->name }}</span></div>
-                              <p class="mt-1 indent-5 text-xl">  
+                              <div class="flex justify-between">
+                                   <div class="text-lg text-text mb-0 leading-5">
+                                        {{ date('F d, Y h:m a', strtotime($history->created_at)) }}
+                                        <span class="text-gray-500 text-sm mt-0">{{ $history->created_at->diffForHumans() }} <br> {{ $history->editor->name }}</span>
+                                   </div>
+                                   <a href="{{ route('download', $history->file->id) }}?fileName={{ "$template->slug-($document->date)-v$history->version" }}"
+                                   class="bg-secondary rounded-md p-2 text-lg text-center hover:bg-primary w-28">
+                                   Download
+                              </a>
+                              </div>
+                              <p class="indent-5 text-xl my-5">  
                                    {{ $history->description }}
                               </p>
+                              
                          </div>
                     @endforeach
                </div>

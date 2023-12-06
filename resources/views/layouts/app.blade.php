@@ -1,4 +1,4 @@
-@props(['sidebar' => false])
+@props(['hasSidebar' => true])
 
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
@@ -21,12 +21,14 @@
             {{-- @include('layouts._navigation') --}}
             @include('layouts._new_navigation')
             <div class="flex flex-grow h-full">
-                @if($sidebar)
-                <aside class="w-1/4 p-7 border-gray-600  text-text bg-background-light">
-                    <div class="h-[94vh] overflow-y-auto">
-                        {{ $sidebar }}
-                    </div>
-                </aside>                
+                @if($hasSidebar)
+                    @isset($sidebar)
+                        <aside class="w-1/4 p-7 border-gray-600  text-text bg-background-light">
+                            <div class="h-[94vh] overflow-y-auto">
+                                {{ $sidebar }}
+                            </div>
+                        </aside> 
+                    @endisset   
                 @endif
 
                 <!-- Page Content -->

@@ -28,12 +28,16 @@ class DocumentDate extends Model
     }
 
     public function file(): MorphOne
-{
+    {
         return $this->morphOne(File::class,'fileable');
     }
 
     public function history()
     {
         return $this->hasMany(DocumentHistory::class);
+    }
+    public function canAccess()
+    {
+        return $this->hasMany(DocumentAccess::class);
     }
 }

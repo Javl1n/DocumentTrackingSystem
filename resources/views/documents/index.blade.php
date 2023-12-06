@@ -1,4 +1,4 @@
-<x-app-layout :sidebar="true">
+<x-app-layout :hasSidebar="true">
     <x-slot name="sidebar">
         <x-documents.sidebar :barangay="$barangay"  />
     </x-slot>

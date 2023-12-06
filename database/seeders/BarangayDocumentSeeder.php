@@ -29,7 +29,7 @@ class BarangayDocumentSeeder extends Seeder
             'slug' => Str::slug($barangayName, '-'),
         ]);
 
-        Barangay::factory(9)->create();
+        Barangay::factory(2)->create();
 
         BarangayHealthWorker::factory()
             ->for($bhw = User::factory()->create([
@@ -47,7 +47,7 @@ class BarangayDocumentSeeder extends Seeder
         Storage::deleteDirectory('templates');
         Storage::deleteDirectory('documents');
 
-        $templates = DocumentTemplate::factory(30)->create();
+        $templates = DocumentTemplate::factory(5)->create();
 
         foreach ($templates as $template) {
             $url = 'templates/' . $template->slug . '.xlsx';
@@ -77,29 +77,39 @@ class BarangayDocumentSeeder extends Seeder
                     'document_template_id' => $documentTemplate->id,
                 ]);
 
-                $documentDates = DocumentDate::factory(10)->create([
+                $documentDates = DocumentDate::factory(5)->create([
                     'document_id' => $document,
                     'user_id' => $user->id,
                 ]);
 
                 foreach ($documentDates as $date) {
-                    $url = "documents/$barangay->slug/$documentTemplate->slug/$date->date.xlsx";
-                    Storage::copy("seederTemplate.xlsx", $url);
-                    $date->file()->create([
-                        "url" => $url,
-                    ]);
+                    $urlRoot = "documents/$barangay->slug/$documentTemplate->slug/$date->date/";
                     $date->history()->create([
                         'user_id' => $user->id,
                         'description' => "Document Uploaded",
                         'created_at' => date('Y-m-d h:m:s' , strtotime($date->date))
                     ]);
 
-                    for($i = 0; $i <= 10; $i++) {
+                    for($i = 0; $i <= 4; $i++) {
                         DocumentHistory::factory()->create([    
                             'user_id' => $user->id,
                             'document_date_id'=> $date->id,
                             'created_at' => fake()->dateTimeBetween($date->date)
                         ]);
+                    }
+
+                    $version = 1;
+
+                    foreach (DocumentHistory::where('document_date_id', $date->id)->orderBy('created_at')->get() as $history)
+                    {   
+                        $history->update([
+                            'version' => $version,
+                        ]);
+                        $history->file()->create([
+                            "url" => $url = $urlRoot . "v$version.xlsx",
+                        ]);
+                        Storage::copy("seederTemplate.xlsx", $url);
+                        $version++;
                     }
                 }
             }

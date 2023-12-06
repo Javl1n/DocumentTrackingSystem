@@ -1,3 +1,4 @@
+<h1 class="font-bold text-lg border-b border-gray-600 pb-2">Navigate</h1>
 <ul class="mt-2 text-lg">
     @foreach($templates as $template)
         <li class="p-2">

@@ -31,8 +31,6 @@ class DocumentTemplateController extends Controller
 
     public function store(Request $request)
     {   
-        // ddd($request->link);
-
         $request->validate([
             'title' => 'required',
             'cycle' => 'required|numeric|gt:0',

@@ -51,11 +51,24 @@ class DocumentDateController extends Controller
                     ->first()->id
         )->where('date', $date)->first();
 
+
+        
+        $mydocument = true;
+        if(auth()->user()->can('bhw')){
+            $worker = BarangayHealthWorker::where('user_id', auth()->user()->id)->first();
+            if($worker->barangay->slug !== $barangay->slug )
+            {
+                $mydocument = false;
+            }
+        }  
+
+
         return view('documents.dates.show', [
             'template' => $template,
             'document' => $date,
             'barangay' => $barangay,
-            'histories' => DocumentHistory::where('document_date_id', $date->id)->orderBy('created_at', 'desc')->get()
+            'histories' => DocumentHistory::where('document_date_id', $date->id)->orderBy('created_at', 'desc')->get(),
+            'myDocument' => $mydocument
         ]);
     }
 
@@ -106,13 +119,16 @@ class DocumentDateController extends Controller
             'date' => $date,
         ]);
 
-        $documentWithDate->file()->create([
-            'url' =>  $request->file('link')->storeAs("documents/$barangay->slug/$template->slug/$date." . $request->link->getClientOriginalExtension())
-        ]);
+        // $documentWithDate->file()->create([
+        //     'url' =>  $request->file('link')->storeAs("documents/$barangay->slug/$template->slug/$date." . $request->link->getClientOriginalExtension())
+        // ]);
 
         $documentWithDate->history()->create([
             'user_id' => auth()->user()->id,
+            'version' => $version = 1,
             'description' => "Document Uploaded",
+        ])->file()->create([
+            'url' =>  $request->file('link')->storeAs("documents/$barangay->slug/$template->slug/$date/v$version." . $request->link->getClientOriginalExtension()),
         ]);
 
 

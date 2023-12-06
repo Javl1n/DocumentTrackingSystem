@@ -9,9 +9,9 @@ class DocumentAccess extends Model
 {
     use HasFactory;
 
-    public function user()
+    public function hasAccess()
     {
-        return $this->belongsTo(BarangayHealthWorker::class);
+        return $this->belongsTo(BarangayHealthWorker::class, "user_id");
     }
 
     public function document()

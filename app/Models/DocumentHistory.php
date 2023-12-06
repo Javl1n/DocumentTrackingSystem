@@ -22,8 +22,8 @@ class DocumentHistory extends Model
         return $this->belongsTo(User::class,"user_id");
     }
 
-    // public function file(): MorphOne
-    // {
-    //     return $this->morphOne(File::class,'fileable');
-    // }
+    public function file(): MorphOne
+    {
+        return $this->morphOne(File::class,'fileable');
+    }
 }

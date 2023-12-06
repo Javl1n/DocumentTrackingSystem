@@ -25,7 +25,7 @@ class BarangayAndAllowedAccess
 
             $worker = BarangayHealthWorker::where('user_id', $request->user()->id)->first();
 
-            $access = DocumentAccess::where('user_id', $request->user()->id)
+            $access = DocumentAccess::where('user_id', $request->user()?->barangayAccount->id)
                                     ->where('document_date_id', $date->id)
                                     ->first();
 
