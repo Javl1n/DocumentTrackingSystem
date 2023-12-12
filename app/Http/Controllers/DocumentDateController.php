@@ -178,4 +178,19 @@ class DocumentDateController extends Controller
 
         return redirect()->route('documents.dates.show', ['barangay' => $date->document->barangay->slug, 'template' => $date->document->template->slug, 'date' => $date->date ])->with('success','');
     }
+
+    public function destroy(Barangay $barangay, $template, $date)
+    {
+        $template = DocumentTemplate::where('slug', $template)->first();
+        $date = DocumentDate::where(
+            'document_id',
+            Document::where('document_template_id', $template->id)
+                    ->where('barangay_id', $barangay->id)
+                    ->first()->id
+        )->where('date', $date)->first();
+
+        $date->delete();
+
+        return redirect()->route('documents.dates.index', ['barangay' => $barangay->slug, 'template' => $template]);
+}
 }

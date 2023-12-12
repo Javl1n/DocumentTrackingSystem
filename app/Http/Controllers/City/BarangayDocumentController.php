@@ -16,8 +16,8 @@ class BarangayDocumentController extends Controller
         $dayBefore = DocumentDate::whereDate('created_at', Carbon::today()->subDays(2))->count();
         $totalDocument = DocumentDate::count();
 
-        $today['total'] = 1;
-        $yesterday['total'] = 0;
+        // $today['total'] = 1;
+        // $yesterday['total'] = 0;
 
         $today['positive'] = $today['total'] >= $yesterday['total'];
         
@@ -29,22 +29,13 @@ class BarangayDocumentController extends Controller
             }
             else
             {
-                $today['percentage'] = 100;
+                $today['percentage'] = 'Infinite';
             }
         } 
         else 
         {
-            // if ( $yesterday['total'] !== 0 )
-            // {
-                $today['percentage'] = ($yesterday['total'] - $today['total']) / $yesterday['total'] * 100;
-            // }
-            // else
-            // {
-            //     $today['percentage'] = 100;
-            // }
+            $today['percentage'] = ($yesterday['total'] - $today['total']) / $yesterday['total'] * 100;
         }
-
-        ddd($today['percentage']);        
 
         return view('cho.documents.barangays.index', [
             'barangays' => Barangay::all(),

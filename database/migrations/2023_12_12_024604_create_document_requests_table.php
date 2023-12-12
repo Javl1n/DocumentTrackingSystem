@@ -11,11 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('document_accesses', function (Blueprint $table) {
+        Schema::create('document_requests', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id');
             $table->foreignId('document_date_id')->constrained()->cascadeOnDelete();
-            $table->unique(['user_id','document_date_id']);
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('document_accesses');
+        Schema::dropIfExists('document_requests');
     }
 };

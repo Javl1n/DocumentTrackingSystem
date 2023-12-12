@@ -1,4 +1,7 @@
-<h1 class="font-bold text-lg border-b border-gray-600 pb-2">Navigate</h1>
+<div class="flex border-b border-gray-600 ">
+    <h1 class="font-bold text-lg pb-2">Navigate</h1>
+
+</div>
 <ul class="mt-2 text-lg">
     @foreach($templates as $template)
         <li class="p-2">
@@ -11,10 +14,10 @@
                         <x-icon name="dropdown-arrow" class="w-4 mt-1 me-2 -rotate-90" x-bind:class="open ? 'rotate-0' : ''" />
                     </span>
                 </div>
-                <div x-show="open" x-collapse>
+                <div x-show="open" x-collapse>  
                     <ul class="ms-5 mt-4">
                         @isset($documents->where('document_template_id', $template->id)->first()->dates)
-                            @foreach ($documents->where('document_template_id', $template->id)->first()->dates as $document)
+                            @foreach ($documents->where('document_template_id', $template->id)->first()?->dates as $document)
                                 <li class="mb-2">
                                     <a href="{{ route('documents.dates.show', ['barangay' => $barangay->slug, 'template' => $template->slug, 'date' => $document->date]) }}" class="{{ request()->is("barangay/$barangay->slug/$template->slug/$document->date")  ? 'text-primary' : '' }} hover:text-accent">
                                         {{ date('F d, Y', strtotime($document->date)) }}

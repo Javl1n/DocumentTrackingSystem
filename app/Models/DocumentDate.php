@@ -40,4 +40,9 @@ class DocumentDate extends Model
     {
         return $this->hasMany(DocumentAccess::class);
     }
+
+    public function request()
+    {
+        return $this->hasOne(DocumentRequest::class);
+    }
 }

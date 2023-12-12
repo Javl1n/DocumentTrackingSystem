@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('document_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('document_date_id');
+            $table->foreignId('document_date_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id');
             $table->integer('version')->nullable();
             $table->text('description');

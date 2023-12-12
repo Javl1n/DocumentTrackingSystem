@@ -1,6 +1,6 @@
 <x-app-layout :hasSidebar="true">
     <x-slot name="sidebar">
-        <x-documents.sidebar :barangay="$barangay" />
+        <livewire:templates-sidebar-search :barangay="$barangay"  />
     </x-slot>
     <x-slot name="header">
         <span class="font-light text-gray-500"><a href="{{ route('documents.index', $barangay->slug) }}">{{ $barangay->name }}</a> / </span>{{ $template->name }}

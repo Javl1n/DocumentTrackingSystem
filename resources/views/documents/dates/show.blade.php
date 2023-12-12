@@ -1,6 +1,7 @@
 <x-app-layout :hasSidebar="$myDocument">
      <x-slot name="sidebar">
-          <x-documents.sidebar :barangay="$barangay" />
+          <livewire:templates-sidebar-search :barangay="$barangay"  />
+
      </x-slot>
      <x-slot name="header">
           <div class="flex justify-between w-full">
@@ -39,7 +40,35 @@
                               >
                                    Edit
                               </a>
+                              @if($document->request === null)
+                                   <a
+                                        href="{{ route('dates.request.store', [ 'barangay' => $barangay->slug, 'template' => $template->slug, 'date' => $document->date ]) }}" 
+                                        class="bg-secondary rounded-md p-2 text-lg text-center hover:bg-primary w-28"
+                                   >
+                                        Delete
+                                   </a>
+                              @else
+                                   <div 
+                                        class="rounded-md p-2 text-sm text-center bg-primary w-28"
+                                   >
+                                        Request Sent
+                                   </div>
+                              @endif
                          @endbhw
+                         @cho
+                              @if($document->request !== null)
+                                   <form method="POST" action="{{ route('dates.destroy', [ 'barangay' => $barangay->slug, 'template' => $template->slug, 'date' => $document->date ]) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button
+                                             href="{{ route('dates.request.store', [ 'barangay' => $barangay->slug, 'template' => $template->slug, 'date' => $document->date ]) }}" 
+                                             class="bg-secondary rounded-md p-2 text-lg text-center hover:bg-primary w-28"
+                                        >
+                                             Delete
+                                        </button>
+                                   </form>
+                              @endif
+                         @endcho
                          
                          <a 
                               href="{{ route('dates.access.edit', [ 'barangay' => $barangay->slug, 'template' => $template->slug, 'date' => $document->date ]) }}" 

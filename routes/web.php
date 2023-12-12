@@ -4,6 +4,7 @@ use App\Http\Controllers\City\BarangayDocumentController;
 use App\Http\Controllers\DocumentAccessController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DocumentDateController;
+use App\Http\Controllers\DocumentRequestController;
 use App\Http\Controllers\DocumentTemplateController;
 use App\Http\Controllers\FileController;
 use App\Http\Controllers\ProfileController;
@@ -58,12 +59,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/', [BarangayDocumentController::class, 'index'])->name('documents.barangay')->can('cho');
         Route::post('templates', [DocumentTemplateController::class, 'store'])->name('templates.store')->can('cho');
         Route::get('templates/create', [DocumentTemplateController::class, 'create'])->name('templates.create')->can('cho');
+        Route::delete('/{barangay:slug}/{template:slug}/{date:date}', [DocumentDateController::class, 'destroy'])->name('dates.destroy');
     });
 
     Route::group([
         'prefix'=> 'barangay', 
         'middleware' => 'barangayWithCho',
     ], function () {
+        Route::get('/{barangay:slug}/{template:slug}/{date:date}/request', [DocumentRequestController::class, 'store'])->name('dates.request.store');
         Route::get('/{barangay:slug}/{template:slug}/{date:date}/access', [DocumentAccessController::class, 'edit'])->name('dates.access.edit');
         Route::put('/{barangay:slug}/{template:slug}/{date:date}/access', [DocumentAccessController::class, 'update'])->name('dates.access.update');
         Route::get('/{barangay:slug}/{template:slug}', [DocumentDateController::class, 'index'])->name('documents.dates.index');

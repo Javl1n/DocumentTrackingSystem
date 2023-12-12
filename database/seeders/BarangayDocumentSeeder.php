@@ -29,7 +29,7 @@ class BarangayDocumentSeeder extends Seeder
             'slug' => Str::slug($barangayName, '-'),
         ]);
 
-        Barangay::factory(2)->create();
+        Barangay::factory(4)->create();
 
         BarangayHealthWorker::factory()
             ->for($bhw = User::factory()->create([
@@ -80,6 +80,7 @@ class BarangayDocumentSeeder extends Seeder
                 $documentDates = DocumentDate::factory(5)->create([
                     'document_id' => $document,
                     'user_id' => $user->id,
+                    'created_at' => fake()->dateTimeBetween()
                 ]);
 
                 foreach ($documentDates as $date) {

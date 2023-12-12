@@ -1,6 +1,7 @@
 <x-app-layout :hasSidebar="true">
     <x-slot name="sidebar">
-        <x-documents.sidebar :barangay="$barangay"  />
+        <livewire:templates-sidebar-search :barangay="$barangay"  />
+        {{-- <x-documents.sidebar :barangay="$barangay"  />  --}}
     </x-slot>
     <x-slot name="header">
         <div class="flex justify-between">
